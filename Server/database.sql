@@ -24,6 +24,7 @@ CREATE TABLE Payment (
 CREATE TABLE Login (
     Email VARCHAR(50),
     Password VARCHAR(50) NOT NULL,
+    Role VARCHAR(15) NOT NULL,
     PRIMARY KEY (Email)
 );
 
