@@ -156,3 +156,12 @@ ALTER TABLE Rents ADD CONSTRAINT fk_rents_tenant FOREIGN KEY (Tenant_id) REFEREN
 ALTER TABLE Rents ADD CONSTRAINT fk_rents_owner FOREIGN KEY (Owner_id) REFERENCES Owner;
 ALTER TABLE Apartment_application ADD CONSTRAINT fk_apartment_application_login FOREIGN KEY (Email) REFERENCES Login;
 ALTER TABLE Apartment_application ADD CONSTRAINT fk_apartment_application_owner FOREIGN KEY (Owner_id) REFERENCES Owner;
+
+
+-- Adding New Admin Manually
+INSERT INTO Login (Email,Password,Role) VALUES ('john@example.com','admin123','Admin');
+
+INSERT INTO Admin (Emp_ID, Name, Phone, Shift_Timings, Authorization_Type, Email)
+VALUES ('A88494d28-3ef3-45ff-91bf-04a50b6d2d8e', 'John', '1234567890', '9:00 AM - 5:00 PM', 'Admin', 'john@example.com');
+
+-- ADD a new table named signups that admin can approve for login and correctly assign the role;

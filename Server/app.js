@@ -4,12 +4,17 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const pool = require("./db");
+const passport = require("passport");
+const expressSession = require("express-session");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const authRouter = require("./routes/auth");
 
 const app = express();
+
+//set view engine to ejs
+app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(cors());
@@ -17,8 +22,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  expressSession({
+    secret: "mySecretKey",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+require("./middleware/LocalStratergy");
 
 app.use("/", indexRouter);
+app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
