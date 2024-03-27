@@ -4,13 +4,13 @@ const passwordUtil = require("./hash");
 const pool = require("../db");
 
 passport.serializeUser(async (user, done) => {
-  //console.log("serialized user");
-  //console.log(user);
-  done(null, user);
+  console.log("serialized user");
+  console.log(user);
+  done(null, user.email, user.password);
 });
 
 passport.deserializeUser(async (user, done) => {
-  //console.log("deserialized user");
+  // console.log("deserialized user");
   //console.log(user);
   try {
     const result = await pool.query("SELECT * FROM LOGIN WHERE email = $1 ", [
@@ -20,8 +20,12 @@ passport.deserializeUser(async (user, done) => {
     if (!result) {
       throw new Error("User not found");
     }
-    //console.log("deserialized user 2");
-    done(null, result.rows[0].email, result.rows[0].password);
+    console.log("deserialized user 2");
+    const deserializedUser = {
+      email: result.rows[0].email,
+      role: result.rows[0].role,
+    };
+    done(null, deserializedUser);
   } catch (error) {
     //console.log("deserialized user 3");
     //console.log(error);
@@ -49,7 +53,6 @@ passport.use(
         if (result.rows.length > 0) {
           const userExist = {
             email: result.rows[0].email,
-            password: result.rows[0].password,
             role: result.rows[0].role,
           };
           //console.log(userExist + "USER EXIST");
@@ -62,9 +65,9 @@ passport.use(
           //   userExist.password
           // );
 
-          if (password === userExist.password) {
+          if (password === result.rows[0].password) {
             //console.log("Valid password");
-            return done(null, userExist.email);
+            return done(null, userExist);
           } else {
             return done(null, false, { message: "Incorrect password" });
           }
