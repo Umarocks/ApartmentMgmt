@@ -21,4 +21,15 @@ router.post(
   }
 );
 
+router.get("/logout", (req, res, next) => {
+  console.log(req.header["authorization"]);
+  res.clearCookie();
+  req.logout(function (err) {
+    console.log(err);
+    req.session.destroy(function (err) {
+      res.render("home");
+    });
+  });
+  console.log("logged out");
+});
 module.exports = router;
