@@ -1,6 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const passport = require("passport");
+const {
+  ensureAuthenticated,
+  forwardAuthenticated,
+} = require("../middleware/LoginChecker");
 //signup
 
 //login
@@ -21,7 +25,7 @@ router.post(
   }
 );
 
-router.get("/logout", (req, res, next) => {
+router.get("/logout", ensureAuthenticated, (req, res, next) => {
   console.log(req.header["authorization"]);
   res.clearCookie();
   req.logout(function (err) {
