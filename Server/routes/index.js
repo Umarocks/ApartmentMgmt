@@ -16,5 +16,9 @@ router.post("/addTodo", async function (req, res, next) {
     res.send(err);
   }
 });
-
+router.get("/addTodo", function (req, res) {
+  if (req.isAuthenticated()) {
+    res.render("addTodo");
+  }
+});
 module.exports = router;
