@@ -60,12 +60,12 @@ passport.use(
             return done(null, false, { message: "Incorrect username" });
           }
 
-          // const isValid = passwordUtil.comparePassword(
-          //   password,
-          //   userExist.password
-          // );
+          const isValid = passwordUtil.comparePassword(
+            password,
+            result.rows[0].password
+          );
 
-          if (password === result.rows[0].password) {
+          if (isValid) {
             //console.log("Valid password");
             return done(null, userExist);
           } else {
