@@ -16,29 +16,22 @@ router.post(
   ensureAuthenticated,
   IsAdmin,
   async function (req, res) {
-    res.write("Login Created");
+    res.write("Admin Login Created");
     console.log(req.body);
     const password = hashPassword(req.body.password);
     const emp_id = "A" + uuidv4();
     console.log(emp_id);
     console.log(password);
     const { name, phone, shift_timings, email } = req.body;
-
-    // const result = await pool.query(
-    //   "INSERT INTO Login (Email,Password,Role) VALUES ($1,$2,$3);",
-    //   [req.body.Email, password, "Admin"]
-    // );
-    // INSERT INTO Login (Email,Password,Role) VALUES ('john@example.com','admin123','Admin');
-
-    // INSERT INTO Admin (Emp_ID, Name, Phone, Shift_Timings, Authorization_Type, Email)
-    // VALUES ('A88494d28-3ef3-45ff-91bf-04a50b6d2d8e', 'John', '1234567890', '9:00 AM - 5:00 PM', 'Admin', 'john@example.com');
-
-    // Admin Schema , Make sure admin has A in the emp_id
-    //       select * from admin;
-    //                 emp_id                 |    name    |   phone    |   shift_timings   | authorization_type |      email
-    // ---------------------------------------+------------+------------+-------------------+--------------------+------------------
-    //  A88494d28-3ef3-45ff-91bf-04a50b6d2d8e | John       | 1234567890 | 9:00 AM - 5:00 PM | Admin              | john@example.com
-
+    const result = await pool.query(
+      "INSERT INTO Login (Email,Password,Role) VALUES ($1,$2,$3);",
+      [email, password, "Admin"]
+    );
+    const result2 = await pool.query(
+      "INSERT INTO Admin (Emp_ID, Name, Phone, Shift_Timings, Authorization_Type, Email) VALUES ($1,$2,$3,$4,$5,$6);",
+      [emp_id, name, phone, shift_timings, "Admin", email]
+    );
+    console.log("Success");
     res.send();
   }
 );
@@ -48,7 +41,36 @@ router.post(
   "/createOwner",
   ensureAuthenticated,
   IsAdmin,
-  async function (req, res) {}
+  async function (req, res) {
+    console.log(req.body);
+    const password = hashPassword(req.body.password);
+    const emp_id = "O" + uuidv4();
+    console.log(emp_id);
+    console.log(password);
+    const { name, ssn, phone_no, address, email } = req.body;
+    console.log("Success");
+    try {
+      await pool.query("BEGIN"); // Start transaction
+      // Replace these with your actual queries
+      const query1 =
+        "INSERT INTO Login (Email,Password,Role) VALUES ($1,$2,$3);";
+      const params1 = [email, password, "Owner"]; // Parameters for the first query
+      await pool.query(query1, params1);
+
+      const query2 =
+        "INSERT INTO Owner (owner_id, Name, Ssn, Phone_no, Address, Email) VALUES ($1,$2,$3,$4,$5,$6);";
+      const params2 = [emp_id, name, ssn, phone_no, address, email]; // Parameters for the second query
+      await pool.query(query2, params2);
+
+      // If all queries execute successfully, commit the transaction
+      await pool.query("COMMIT");
+      res.send("Transaction Owner Creation completed successfully.");
+    } catch (error) {
+      await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during the transaction");
+    }
+  }
 );
 
 //create tenant
