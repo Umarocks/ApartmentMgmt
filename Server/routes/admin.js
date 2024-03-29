@@ -16,23 +16,34 @@ router.post(
   ensureAuthenticated,
   IsAdmin,
   async function (req, res) {
-    res.write("Admin Login Created");
     console.log(req.body);
     const password = hashPassword(req.body.password);
     const emp_id = "A" + uuidv4();
     console.log(emp_id);
     console.log(password);
     const { name, phone, shift_timings, email } = req.body;
-    const result = await pool.query(
-      "INSERT INTO Login (Email,Password,Role) VALUES ($1,$2,$3);",
-      [email, password, "Admin"]
-    );
-    const result2 = await pool.query(
-      "INSERT INTO Admin (Emp_ID, Name, Phone, Shift_Timings, Authorization_Type, Email) VALUES ($1,$2,$3,$4,$5,$6);",
-      [emp_id, name, phone, shift_timings, "Admin", email]
-    );
-    console.log("Success");
-    res.send();
+    try {
+      await pool.query("BEGIN"); // Start transaction
+      // Replace these with your actual queries
+      const query1 =
+        "INSERT INTO Login (Email,Password,Role) VALUES ($1,$2,$3);";
+
+      const params1 = [email, password, "Admin"]; // Parameters for the first query
+      await pool.query(query1, params1);
+
+      const query2 =
+        "INSERT INTO Admin (Emp_ID, Name, Phone, Shift_Timings, Authorization_Type, Email) VALUES ($1,$2,$3,$4,$5,$6);";
+      const params2 = [emp_id, name, phone, shift_timings, "Admin", email]; // Parameters for the second query
+      await pool.query(query2, params2);
+
+      // If all queries execute successfully, commit the transaction
+      await pool.query("COMMIT");
+      res.send("Transaction Admin Creation completed successfully.");
+    } catch (error) {
+      await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during the transaction");
+    }
   }
 );
 
