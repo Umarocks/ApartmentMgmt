@@ -336,3 +336,6 @@ VALUES ('A88494d28-3ef3-45ff-91bf-04a50b6d2d8e', 'John', '1234567890', '9:00 AM 
 
 -- ADD a new table named signups that admin can approve for login and correctly assign the role;
 
+-- Initilize parking pkey to be composite 
+ALTER TABLE parking DROP CONSTRAINT parking_pkey;
+ALTER TABLE parking ADD PRIMARY KEY (spot_no, block_id);
