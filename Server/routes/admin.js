@@ -97,7 +97,16 @@ router.get(
   "/getAllTenant",
   ensureAuthenticated,
   IsAdmin,
-  async function (req, res) {}
+  async function (req, res) {
+    try {
+      const result = await pool.query("SELECT * FROM LOGIN;", []);
+      res.send(result.rows);
+    } catch (error) {
+      await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during the transaction");
+    }
+  }
 );
 
 //show all owner detail
