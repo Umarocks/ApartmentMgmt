@@ -99,7 +99,7 @@ router.get(
   IsAdmin,
   async function (req, res) {
     try {
-      const result = await pool.query("SELECT * FROM LOGIN;", []);
+      const result = await pool.query("SELECT * FROM Tenant;", []);
       res.send(result.rows);
     } catch (error) {
       await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
@@ -114,7 +114,16 @@ router.get(
   "/getAllOwner",
   ensureAuthenticated,
   IsAdmin,
-  async function (req, res) {}
+  async function (req, res) {
+    try {
+      const result = await pool.query("SELECT * FROM Owner;", []);
+      res.send(result.rows);
+    } catch (error) {
+      await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during the transaction");
+    }
+  }
 );
 
 //allot parking slot
@@ -130,7 +139,16 @@ router.get(
   "/getAllComplaint",
   ensureAuthenticated,
   IsAdmin,
-  async function (req, res) {}
+  async function (req, res) {
+    try {
+      const result = await pool.query("SELECT * FROM Complaint;", []);
+      res.send(result.rows);
+    } catch (error) {
+      await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during the transaction");
+    }
+  }
 );
 
 // total owner count
@@ -138,7 +156,16 @@ router.get(
   "/totalOwner",
   ensureAuthenticated,
   IsAdmin,
-  async function (req, res) {}
+  async function (req, res) {
+    try {
+      const result = await pool.query("SELECT COUNT(EMAIL) FROM LOGIN;", []);
+      res.send(result.rows);
+    } catch (error) {
+      await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during the transaction");
+    }
+  }
 );
 
 //total tenant count
@@ -146,7 +173,16 @@ router.get(
   "/totalTenant",
   ensureAuthenticated,
   IsAdmin,
-  async function (req, res) {}
+  async function (req, res) {
+    try {
+      const result = await pool.query("SELECT COUNT(EMAIL) FROM TENANT;", []);
+      res.send(result.rows);
+    } catch (error) {
+      await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during the transaction");
+    }
+  }
 );
 
 //total employee count
