@@ -344,3 +344,40 @@ VALUES ('A88494d28-3ef3-45ff-91bf-04a50b6d2d8e', 'John', '1234567890', '9:00 AM 
 -- Initilize parking pkey to be composite 
 ALTER TABLE parking DROP CONSTRAINT parking_pkey;
 ALTER TABLE parking ADD PRIMARY KEY (spot_no, block_id);
+
+
+
+CREATE ROLE app_admin_role LOGIN PASSWORD 'admin_password';
+CREATE ROLE app_owner_role LOGIN PASSWORD 'owner_password';
+CREATE ROLE app_tenant_role LOGIN PASSWORD 'tenant_password';
+
+GRANT CONNECT ON DATABASE AptMgmt TO app_admin_role ;
+GRANT CONNECT ON DATABASE AptMgmt TO app_owner_role ;
+GRANT CONNECT ON DATABASE AptMgmt TO app_tenant_role ;
+
+-- admin
+GRANT USAGE ON SCHEMA schema_name TO app_admin_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_admin_role;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO app_admin_role;
+
+
+
+-- owner
+-- Grant access to view their properties
+GRANT SELECT ON TABLE apartments TO app_owner_role;
+-- Grant access to manage (respond to) complaints related to their properties
+GRANT SELECT, UPDATE ON TABLE complaints TO app_owner_role;
+-- Grant access to view payments for their properties
+GRANT SELECT ON TABLE payments TO app_owner_role;
+-- Grant access to view tenants for their properties
+GRANT SELECT ON tenants TO app_owner_role;
+
+
+--tenant
+-- Grant access to make payments and view their own payments
+GRANT INSERT, SELECT ON TABLE payment TO app_tenant_role;
+-- Grant access to file and view their complaints
+GRANT INSERT, SELECT ON TABLE complaint TO app_tenant_role;
+-- Grant access to view their apartment details
+GRANT SELECT ON TABLE apartment TO app_tenant_role;
+

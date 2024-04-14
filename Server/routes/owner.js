@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated } = require("../middleware/LoginChecker");
 const { IsOwner } = require("../middleware/IsOwner");
+const { IsAdminOrOwner} = require("../middleware/IsAdminorOwner");
 const OwnerController = require("../controllers/OwnerController");
 
 router.get(
   "/properties",
   ensureAuthenticated,
-  IsOwner,
+  IsAdminOrOwner,
   OwnerController.viewProperties
 );
 router.post(
