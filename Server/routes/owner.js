@@ -24,3 +24,12 @@ router.get(
 );
 
 module.exports = router;
+
+// Owner
+
+// Owner can see the Tenant details of his/her owned room.
+// Owner can create Tenant.
+// Owner can see the complaints from his/her owned room.
+// Owner can see the Room Details.
+// Owner can see Total Complaint.
+// Owner can see Number of Employee.
