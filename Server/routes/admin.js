@@ -12,22 +12,68 @@ const {
   forwardAuthenticated,
 } = require("../middleware/LoginChecker");
 
-router.post("/createAdmin", ensureAuthenticated, IsAdmin, adminController.createAdmin);                 
-router.post("/createOwner", ensureAuthenticated, IsAdmin, adminController.createOwner);                   
-router.get("/getAllTenant", ensureAuthenticated, IsAdmin, adminController.getAllTenants);
-router.get("/getAllOwner", ensureAuthenticated, IsAdmin, adminController.getAllOwners);
-router.post("/AllotParking", ensureAuthenticated, IsAdmin, adminController.allotParking);
-router.get("/getAllComplaint", ensureAuthenticated, IsAdmin, adminController.getAllComplaints);
-router.get("/totalOwner", ensureAuthenticated, IsAdmin, adminController.totalOwnerCount);
-router.get("/totalTenant", ensureAuthenticated, IsAdmin, adminController.totalTenantCount);
+router.post(
+  "/createAdmin",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.createAdmin
+);
 
+router.post(
+  "/createOwner",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.createOwner
+);
+
+router.get(
+  "/getAllTenant",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.getAllTenants
+);
+
+router.get(
+  "/getAllOwner",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.getAllOwners
+);
+
+router.post(
+  "/AllotParking",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.allotParking
+);
+
+router.get(
+  "/getAllComplaint",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.getAllComplaints
+);
+
+router.get(
+  "/totalOwner",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.totalOwnerCount
+);
+
+router.get(
+  "/totalTenant",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.totalTenantCount
+);
 
 //create tenant
 router.post(
   "/createTenant",
   ensureAuthenticated,
   IsAdmin,
-  async function (req, res) {}
+  adminController.createTenant
 );
 
 module.exports = router;
@@ -42,9 +88,8 @@ module.exports = router;
 // Admin can see total Tenants.
 // Admin can see total Employee.
 
-
 // TO DO:
 // create tenants
 // delete tenant or specific tenant/owner
 //  add apartments or register new apartments
-//  allocate apartments or something like that 
+//  allocate apartments or something like that
