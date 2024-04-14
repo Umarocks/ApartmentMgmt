@@ -76,20 +76,40 @@ router.post(
   adminController.createTenant
 );
 
+router.post(
+  "/createBlock",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.createBlock
+);
+
 module.exports = router;
 
 //total employee count
 // Admin can login. {DONE}
-// Admin can view the tenant and owner details.
-// Admin can create owner.
+// Admin can view the tenant and owner details. {DONE}
+// Admin can create owner.{DONE}
 // Admin can allot parking slot.
-// Admin can view the complaints.
-// Admin can see total Owners.
-// Admin can see total Tenants.
-// Admin can see total Employee.
-
+// Admin can view the complaints.{DONE}
+// Admin can see total Owners.{DONE}
+// Admin can see total Tenants.{DONE}
+// Admin can see total Employee.{DONE}
+//  create block {DONE}
 // TO DO:
-// create tenants
-// delete tenant or specific tenant/owner
+//  create tenants
+//  create apartment
+
+//   Column  |         Type          | Collation | Nullable | Default
+// ----------+-----------------------+-----------+----------+---------
+//  apt_no   | character varying(10) |           | not null |
+//  block_id | integer               |           | not null |
+//  bedrooms | integer               |           | not null |
+//  type     | character varying(10) |           | not null |
+//  area     | integer               |           | not null |
+//  floor    | integer               |           | not null |
+//  address  | character varying(50) |           | not null |
+//  owner_id | character varying(10) |           |          |
+
+//  delete tenant or specific tenant/owner
 //  add apartments or register new apartments
 //  allocate apartments or something like that

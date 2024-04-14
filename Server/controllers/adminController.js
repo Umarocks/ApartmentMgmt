@@ -1,6 +1,7 @@
 const pool = require("../db");
 const { v4: uuidv4 } = require("uuid");
 const { hashPassword } = require("../middleware/hash");
+const { getRandomInt } = require("../middleware/randomIntId");
 
 const adminController = {
   createAdmin: async (req, res) => {
@@ -16,7 +17,11 @@ const adminController = {
 
       const query2 =
         "INSERT INTO Admin (Emp_ID, Name, Phone, Shift_Timings, Authorization_Type, Email) VALUES ($1,$2,$3,$4,$5,$6);";
-      await pool.query(query2, [emp_id, name,phone,shift_timings,
+      await pool.query(query2, [
+        emp_id,
+        name,
+        phone,
+        shift_timings,
         "Admin",
         email,
       ]);
@@ -43,7 +48,7 @@ const adminController = {
       [apt_no]
     );
     if (apt_check.rows.length <= 0) {
-      res.send("Apartment Doesnt Exist");
+      return res.status(404).json({ message: "Apartment Not Found" });
     }
     try {
       await pool.query("BEGIN"); // Start transaction
@@ -148,6 +153,36 @@ const adminController = {
     } catch (error) {
       console.error("Error counting tenants", error.stack);
       res.status(500).send("Error counting tenants");
+    }
+  },
+  createBlock: async (req, res) => {
+    //                             Table "public.block"
+    //    Column   |         Type          | Collation | Nullable | Default
+    // ------------+-----------------------+-----------+----------+---------
+    //  block_id   | integer               |           | not null |
+    //  block_name | character varying(10) |           | not null |
+    //  address    | character varying(50) |           |          |
+    const block_id = getRandomInt();
+    const { block_name, address } = req.body;
+    console.log(req.body, block_id);
+    // const check_id = await pool.query(
+    //   "SELECT * from block where block_id = ($1)",
+    //   [block_id]
+    // );
+    // if (check_id.rows[0] <= 0) {
+    //   return res.status(404).json({ message: "Block cannot be created" });
+    // }
+    try {
+      await pool.query("BEGIN");
+      const query1 =
+        "INSERT INTO block (block_id,block_name,address) VALUES ($1,$2,$3);";
+      await pool.query(query1, [block_id, block_name, address]);
+      await pool.query("COMMIT");
+      res.send("Owner creation successful.");
+    } catch (error) {
+      await pool.query("ROLLBACK");
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during owner creation");
     }
   },
 };

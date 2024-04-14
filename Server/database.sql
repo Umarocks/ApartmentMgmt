@@ -322,6 +322,9 @@ REFERENCES Owner
 ON UPDATE CASCADE 
 ON DELETE CASCADE;
 
+-- unique combination of address and block_name
+ALTER TABLE block
+ADD CONSTRAINT unique_block_address UNIQUE (block_name, address);
 --Check all non cascade foreign keys
 SELECT conname AS constraint_name,
        conrelid::regclass AS table
