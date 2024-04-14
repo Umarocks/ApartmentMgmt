@@ -90,6 +90,13 @@ router.post(
   adminController.createApt
 );
 
+router.delete(
+  "/deleteTenant",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.deleteTenant
+);
+
 module.exports = router;
 
 //total employee count

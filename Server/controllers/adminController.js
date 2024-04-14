@@ -34,17 +34,7 @@ const adminController = {
       res.status(500).send("Error during admin creation");
     }
   },
-  //                     Table "public.tenant"
-  //     Column    |         Type          | Collation | Nullable | Default
-  // --------------+-----------------------+-----------+----------+---------
-  //  tenant_id    | character varying(38) |           | not null |
-  //  name         | character(50)         |           | not null |
-  //  ssn          | character varying(9)  |           | not null |
-  //  age          | integer               |           |          |
-  //  perm_address | character varying(50) |           |          |
-  //  apt_no       | character varying(10) |           |          |
-  //  email        | character varying(50) |           |          |
-  //  block_id     | integer               |           |          |
+
   createTenant: async (req, res) => {
     const password = hashPassword(req.body.password);
     const emp_id = "T" + uuidv4();
@@ -98,7 +88,7 @@ const adminController = {
       await pool.query(query3, params3);
       // If all queries execute successfully, commit the transaction
       await pool.query("COMMIT");
-      res.send("Transaction Owner Creation completed successfully.");
+      res.send("Tenant Creation completed successfully.");
     } catch (error) {
       await pool.query("ROLLBACK"); // If any query fails, roll back the transaction
       console.error("Error in transaction", error.stack);
@@ -195,11 +185,11 @@ const adminController = {
         "INSERT INTO block (block_id,block_name,address) VALUES ($1,$2,$3);";
       await pool.query(query1, [block_id, block_name, address]);
       await pool.query("COMMIT");
-      res.send("Owner creation successful.");
+      res.send("Block creation successful.");
     } catch (error) {
       await pool.query("ROLLBACK");
       console.error("Error in transaction", error.stack);
-      res.status(500).send("Error during owner creation");
+      res.status(500).send("Error during Block creation");
     }
   },
 
@@ -252,7 +242,32 @@ const adminController = {
     } catch (error) {
       await pool.query("ROLLBACK");
       console.error("Error in transaction", error.stack);
-      res.status(500).send("Error during owner creation");
+      res.status(500).send("Error during Apartment creation");
+    }
+  },
+
+  deleteTenant: async (req, res) => {
+    const { email } = req.body;
+    const tenantCheck = await pool.query(
+      "SELECT ROLE FROM LOGIN WHERE EMAIL LIKE ($1)",
+      [email]
+    );
+    if (
+      tenantCheck.rows[0] == undefined ||
+      tenantCheck.rows[0].role != "Tenant"
+    ) {
+      return res.status(404).json({ message: "Tenant Not Found" });
+    }
+    try {
+      await pool.query("BEGIN");
+      const query1 = "DELETE FROM LOGIN WHERE email LIKE ($1);";
+      await pool.query(query1, [email]);
+      await pool.query("COMMIT");
+      res.send("Tenant " + email + " Deleted successfully.");
+    } catch (error) {
+      await pool.query("ROLLBACK");
+      console.error("Error in transaction", error.stack);
+      return res.status(404).json("Error during owner creation");
     }
   },
 };
