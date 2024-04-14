@@ -15,6 +15,7 @@ const { IsOwner } = require("../middleware/IsOwner");
 //   someOwnerControllerFunction
 // );
 router.post("/pay", ensureAuthenticated, IsTenant, TenantController.payRent);
+
 router.post(
   "/complaints",
   ensureAuthenticated,
@@ -23,8 +24,6 @@ router.post(
 );
 
 router.get("/lease", ensureAuthenticated, IsTenant, TenantController.viewLease);
-
-// router.get("/getInfo", ensureAuthenticated, IsTenant, TenantController.getInfo);
 
 router.post(
   "/maintenance/request",

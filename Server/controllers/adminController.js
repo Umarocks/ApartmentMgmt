@@ -42,6 +42,13 @@ const adminController = {
     console.log(password);
     const { name, ssn, phone, perm_address, email, age, apt_no } = req.body;
     console.log("Success");
+    const apt_check = await pool.query(
+      "SELECT * FROM apartment WHERE apt_no like ($1);",
+      [apt_no]
+    );
+    if (apt_check.rows.length <= 0) {
+      res.send("Apartment Doesnt Exist");
+    }
     try {
       await pool.query("BEGIN"); // Start transaction
       // Replace these with your actual queries
