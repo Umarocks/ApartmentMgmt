@@ -4,7 +4,24 @@ const { hashPassword } = require("../middleware/hash");
 
 const TenantController = {
   payRent: async (req, res) => {
-    // Implementation for paying rent
+    try {
+      const { mode, payment_date, amount, apt_no } = req.body;
+      const ownerResult = await pool.query(
+        "select owner_id from tenant t left join apartment a on t.apt_no = a.apt_no where t.tenant_id like ($1);",
+        [req.user.tenant_id]
+      );
+      const owner_id = ownerResult.rows[0].owner_id;
+      const date = new Date();
+      const payment_id = "P" + uuidv4();
+      const result = await pool.query(
+        "INSERT INTO payment (payment_id, mode, payment_date, amount, owner_id, tenant_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+        [payment_id, mode, date, amount, owner_id, req.user.tenant_id]
+      );
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.error("Error filing complaint", error.stack);
+      res.status(500).send("Error filing complaint");
+    }
   },
 
   fileComplaint: async (req, res) => {
