@@ -71,6 +71,20 @@ const TenantController = {
     }
   },
 
+  getInfo: async (req, res) => {
+    console.log(req.user);
+    try {
+      const result = await pool.query(
+        "SELECT Name, Age, Perm_Address, A.Apt_No, T.Email, A.Address, A.Floor, A.Type, A.Area, A.Bedrooms FROM Tenant T INNER JOIN Apartment A ON T.Apt_No = A.Apt_No AND T.Block_Id = A.Block_Id WHERE Email LIKE ($1);",
+        [req.user.email]
+      );
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.error("Error filing complaint", error.stack);
+      res.status(500).send("Error filing complaint");
+    }
+  },
+
   // Additional methods for other tenant functionalities...
 };
 

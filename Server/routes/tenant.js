@@ -25,8 +25,10 @@ router.post(
 
 router.get("/lease", ensureAuthenticated, IsTenant, TenantController.viewLease);
 
+router.get("/Info", ensureAuthenticated, IsTenant, TenantController.getInfo);
+
 router.post(
-  "/maintenance/request",
+  "/maintenance",
   ensureAuthenticated,
   IsTenant,
   TenantController.requestMaintenance
@@ -37,10 +39,12 @@ module.exports = router;
 // Tenant
 
 // Tenant can see the alloted parking slot.
-// Tenant can pay maintenance fee.
-// Tenant can raise complaints.
-// Tenant can see his/her Tenant id.
-// Tenant can see his/her Name.
-// Tenant can see his/her Age.
-// Tenant can see his/her DOB.
-// Tenant can see his/her Room no.
+// Tenant can pay rent .{Done}
+// Tenant can raise complaints.{Done}
+// Tenant can check their lease {Done}
+// Tenant can see his/her Tenant id.{Done}
+// Tenant can see his/her Name.{Done}
+// Tenant can see his/her Age.{Done}
+// Tenant can see his/her DOB.{Done}
+// Tenant can see his/her Room no.{Done}
+// Tenant can file regular maintenance {Done}
