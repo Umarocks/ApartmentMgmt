@@ -16,11 +16,7 @@ const adminController = {
 
       const query2 =
         "INSERT INTO Admin (Emp_ID, Name, Phone, Shift_Timings, Authorization_Type, Email) VALUES ($1,$2,$3,$4,$5,$6);";
-      await pool.query(query2, [
-        emp_id,
-        name,
-        phone,
-        shift_timings,
+      await pool.query(query2, [emp_id, name,phone,shift_timings,
         "Admin",
         email,
       ]);
