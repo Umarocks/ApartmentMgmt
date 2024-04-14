@@ -34,18 +34,28 @@ const adminController = {
       res.status(500).send("Error during admin creation");
     }
   },
-
+  //                     Table "public.tenant"
+  //     Column    |         Type          | Collation | Nullable | Default
+  // --------------+-----------------------+-----------+----------+---------
+  //  tenant_id    | character varying(38) |           | not null |
+  //  name         | character(50)         |           | not null |
+  //  ssn          | character varying(9)  |           | not null |
+  //  age          | integer               |           |          |
+  //  perm_address | character varying(50) |           |          |
+  //  apt_no       | character varying(10) |           |          |
+  //  email        | character varying(50) |           |          |
+  //  block_id     | integer               |           |          |
   createTenant: async (req, res) => {
-    console.log(req.body);
     const password = hashPassword(req.body.password);
+    console.log(req.body);
     const emp_id = "T" + uuidv4();
     console.log(emp_id);
-    console.log(password);
-    const { name, ssn, phone, perm_address, email, age, apt_no } = req.body;
+    const { name, ssn, phone, perm_address, email, age, apt_no, block_id } =
+      req.body;
     console.log("Success");
     const apt_check = await pool.query(
-      "SELECT * FROM apartment WHERE apt_no like ($1);",
-      [apt_no]
+      "SELECT * FROM apartment WHERE apt_no like ($1) and block_id = ($2);",
+      [apt_no, block_id]
     );
     if (apt_check.rows.length <= 0) {
       return res.status(404).json({ message: "Apartment Not Found" });
@@ -59,8 +69,17 @@ const adminController = {
       await pool.query(query1, params1);
 
       const query2 =
-        "INSERT INTO Tenant (tenant_id, Name, Ssn, age, perm_address, apt_no, Email) VALUES ($1,$2,$3,$4,$5,$6,$7);";
-      const params2 = [emp_id, name, ssn, age, perm_address, apt_no, email]; // Parameters for the second query
+        "INSERT INTO Tenant (tenant_id, Name, Ssn, age, perm_address, apt_no, Email,block_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);";
+      const params2 = [
+        emp_id,
+        name,
+        ssn,
+        age,
+        perm_address,
+        apt_no,
+        email,
+        block_id,
+      ]; // Parameters for the second query
       await pool.query(query2, params2);
 
       const query3 =
@@ -155,23 +174,11 @@ const adminController = {
       res.status(500).send("Error counting tenants");
     }
   },
+
   createBlock: async (req, res) => {
-    //                             Table "public.block"
-    //    Column   |         Type          | Collation | Nullable | Default
-    // ------------+-----------------------+-----------+----------+---------
-    //  block_id   | integer               |           | not null |
-    //  block_name | character varying(10) |           | not null |
-    //  address    | character varying(50) |           |          |
     const block_id = getRandomInt();
     const { block_name, address } = req.body;
     console.log(req.body, block_id);
-    // const check_id = await pool.query(
-    //   "SELECT * from block where block_id = ($1)",
-    //   [block_id]
-    // );
-    // if (check_id.rows[0] <= 0) {
-    //   return res.status(404).json({ message: "Block cannot be created" });
-    // }
     try {
       await pool.query("BEGIN");
       const query1 =
@@ -179,6 +186,70 @@ const adminController = {
       await pool.query(query1, [block_id, block_name, address]);
       await pool.query("COMMIT");
       res.send("Owner creation successful.");
+    } catch (error) {
+      await pool.query("ROLLBACK");
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during owner creation");
+    }
+  },
+
+  createApt: async (req, res) => {
+    //                   Table "public.apartment"
+    //   Column  |         Type          | Collation | Nullable | Default
+    // ----------+-----------------------+-----------+----------+---------
+    //  apt_no   | character varying(10) |           | not null |
+    //  block_id | integer               |           | not null |
+    //  bedrooms | integer               |           | not null |
+    //  type     | character varying(10) |           | not null |
+    //  area     | integer               |           | not null |
+    //  floor    | integer               |           | not null |
+    //  address  | character varying(50) |           | not null |
+    //  owner_id | character varying(10) |           |          |
+    const {
+      apt_no,
+      bedrooms,
+      type,
+      area,
+      floor,
+      address,
+      owner_email,
+      block_name,
+    } = req.body;
+    console.log(req.body);
+    const getBlockId = await pool.query(
+      "SELECT * FROM block WHERE block_name LIKE ($1) AND ADDRESS LIKE ($2);",
+      [block_name, address]
+    );
+    const getOwnerId = await pool.query(
+      "select owner_id from owner inner join login on login.email = owner.email where owner.email like ($1);",
+      [owner_email]
+    );
+
+    if (getBlockId.rows.length <= 0) {
+      return res.status(404).json({ message: "Block Not Found" });
+    }
+    if (getOwnerId.rows.length <= 0) {
+      return res.status(404).json({ message: "Owner Not Found" });
+    }
+    const block_id = getBlockId.rows[0].block_id;
+    const owner_id = getOwnerId.rows[0].owner_id;
+    console.log(block_id, owner_id);
+    try {
+      await pool.query("BEGIN");
+      const query1 =
+        "INSERT INTO apartment (apt_no,block_id,bedrooms,type,area,floor,address,owner_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);";
+      await pool.query(query1, [
+        apt_no,
+        block_id,
+        bedrooms,
+        type,
+        area,
+        floor,
+        address,
+        owner_id,
+      ]);
+      await pool.query("COMMIT");
+      res.send("Apartment creation successful.");
     } catch (error) {
       await pool.query("ROLLBACK");
       console.error("Error in transaction", error.stack);

@@ -83,6 +83,13 @@ router.post(
   adminController.createBlock
 );
 
+router.post(
+  "/createApt",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.createApt
+);
+
 module.exports = router;
 
 //total employee count
@@ -95,10 +102,23 @@ module.exports = router;
 // Admin can see total Tenants.{DONE}
 // Admin can see total Employee.{DONE}
 //  create block {DONE}
+
 // TO DO:
 //  create tenants
-//  create apartment
+//                     Table "public.tenant"
+//     Column    |         Type          | Collation | Nullable | Default
+// --------------+-----------------------+-----------+----------+---------
+//  tenant_id    | character varying(38) |           | not null |
+//  name         | character(50)         |           | not null |
+//  ssn          | character varying(9)  |           | not null |
+//  age          | integer               |           |          |
+//  perm_address | character varying(50) |           |          |
+//  apt_no       | character varying(10) |           |          |
+//  email        | character varying(50) |           |          |
+//  block_id     | integer               |           |          |
 
+//  create apartment
+//                   Table "public.apartment"
 //   Column  |         Type          | Collation | Nullable | Default
 // ----------+-----------------------+-----------+----------+---------
 //  apt_no   | character varying(10) |           | not null |
