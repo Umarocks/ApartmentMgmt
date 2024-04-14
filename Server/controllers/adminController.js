@@ -47,12 +47,23 @@ const adminController = {
   //  block_id     | integer               |           |          |
   createTenant: async (req, res) => {
     const password = hashPassword(req.body.password);
-    console.log(req.body);
     const emp_id = "T" + uuidv4();
-    console.log(emp_id);
-    const { name, ssn, phone, perm_address, email, age, apt_no, block_id } =
-      req.body;
-    console.log("Success");
+    const {
+      name,
+      ssn,
+      phone,
+      perm_address,
+      email,
+      age,
+      apt_no,
+      block_name,
+      apt_address,
+    } = req.body;
+    const getBlockId = await pool.query(
+      "select block_id from block where block_name like ($1) and address like ($2);",
+      [block_name, apt_address]
+    );
+    const block_id = getBlockId.rows[0].block_id;
     const apt_check = await pool.query(
       "SELECT * FROM apartment WHERE apt_no like ($1) and block_id = ($2);",
       [apt_no, block_id]
@@ -62,7 +73,6 @@ const adminController = {
     }
     try {
       await pool.query("BEGIN"); // Start transaction
-      // Replace these with your actual queries
       const query1 =
         "INSERT INTO Login (Email,Password,Role) VALUES ($1,$2,$3);";
       const params1 = [email, password, "Tenant"]; // Parameters for the first query
@@ -194,17 +204,6 @@ const adminController = {
   },
 
   createApt: async (req, res) => {
-    //                   Table "public.apartment"
-    //   Column  |         Type          | Collation | Nullable | Default
-    // ----------+-----------------------+-----------+----------+---------
-    //  apt_no   | character varying(10) |           | not null |
-    //  block_id | integer               |           | not null |
-    //  bedrooms | integer               |           | not null |
-    //  type     | character varying(10) |           | not null |
-    //  area     | integer               |           | not null |
-    //  floor    | integer               |           | not null |
-    //  address  | character varying(50) |           | not null |
-    //  owner_id | character varying(10) |           |          |
     const {
       apt_no,
       bedrooms,
