@@ -38,7 +38,6 @@ module.exports = router;
 
 // Tenant
 
-// Tenant can see the alloted parking slot.
 // Tenant can pay rent .{Done}
 // Tenant can raise complaints.{Done}
 // Tenant can check their lease {Done}
@@ -48,3 +47,5 @@ module.exports = router;
 // Tenant can see his/her DOB.{Done}
 // Tenant can see his/her Room no.{Done}
 // Tenant can file regular maintenance {Done}
+
+// Tenant can see the alloted parking slot.

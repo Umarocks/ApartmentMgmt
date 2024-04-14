@@ -270,6 +270,59 @@ const adminController = {
       return res.status(404).json("Error during owner creation");
     }
   },
+  getTotalComplaints: async (req, res) => {
+    try {
+      const result = await pool.query(
+        "SELECT count(complaint_id) FROM Complaint;"
+      );
+      res.send(result.rows[0]);
+    } catch (error) {
+      console.error("Error fetching complaints count", error.stack);
+      res.status(500).send("Error fetching complaints count");
+    }
+  },
+
+  //                        Table "public.maintenance_staff"
+  //      Column      |         Type          | Collation | Nullable | Default
+  // -----------------+-----------------------+-----------+----------+---------
+  //  emp_id          | character varying(10) |           | not null |
+  //  name            | character(10)         |           |          |
+  //  phone           | character varying(10) |           |          |
+  //  shift_timings   | character varying(50) |           |          |
+  //  contract_length | character varying(20) |           |          |
+  //  role            | character varying(20) |           |          |
+  //  email           | character varying(50) |           |          |
+  createEmployee: async (req, res) => {
+    const password = hashPassword(req.body.password);
+    console.log(password);
+    const emp_id = "E" + uuidv4();
+    const { name, phone, shift_timings, email, contract_length } = req.body;
+    try {
+      await pool.query("BEGIN");
+      const query1 =
+        "INSERT INTO Login (Email,Password,Role) VALUES ($1,$2,$3);";
+      await pool.query(query1, [email, password, "Employee"]);
+
+      const query2 =
+        "INSERT INTO maintenance_staff (Emp_ID, Name, Phone, Shift_Timings, role, Email,contract_length) VALUES ($1,$2,$3,$4,$5,$6,$7);";
+      await pool.query(query2, [
+        emp_id,
+        name,
+        phone,
+        shift_timings,
+        "Employee",
+        email,
+        contract_length,
+      ]);
+
+      await pool.query("COMMIT");
+      res.send("Employee creation successful.");
+    } catch (error) {
+      await pool.query("ROLLBACK");
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during Employee creation");
+    }
+  },
 };
 
 module.exports = { adminController };

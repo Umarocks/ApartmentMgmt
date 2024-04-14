@@ -11,11 +11,11 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
-const ownerRouter = require('./routes/owner');
-const tenantRouter = require('./routes/tenant');
+const ownerRouter = require("./routes/owner");
+const tenantRouter = require("./routes/tenant");
+const employeeRouter = require("./routes/employee");
 
 const app = express();
-
 
 //set view engine to ejs
 app.set("view engine", "ejs");
@@ -37,12 +37,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./middleware/LocalStratergy");
 
-app.use("/", indexRouter);
+// app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
 app.use("/users", usersRouter);
-app.use('/owner', ownerRouter);
-app.use('/tenant', tenantRouter);
+app.use("/owner", ownerRouter);
+app.use("/tenant", tenantRouter);
+app.use("/employee", employeeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

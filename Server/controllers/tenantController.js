@@ -81,7 +81,7 @@ const TenantController = {
       res.json(result.rows[0]);
     } catch (error) {
       console.error("Error filing complaint", error.stack);
-      res.status(500).send("Error filing complaint");
+      res.status(500).send("Error getting tenant info");
     }
   },
 
