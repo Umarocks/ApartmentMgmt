@@ -111,8 +111,8 @@ module.exports = router;
 //  create block {DONE}
 //  create tenants{DONE}
 //  create apartment{DONE}
+//  delete tenant or specific tenant/owner{DONE}
+//  add apartments or register new apartments{DONE}
 
 // TO DO:
-//  delete tenant or specific tenant/owner
-//  add apartments or register new apartments
-//  allocate apartments or something like that
+// { NONE}
