@@ -60,6 +60,7 @@ CREATE TABLE Tenant (
     Perm_address VARCHAR(50), 
     Apt_no VARCHAR(10), 
     Email VARCHAR(50), 
+    phone_no VARCHAR(10),
     PRIMARY KEY (Tenant_id)
 );
 

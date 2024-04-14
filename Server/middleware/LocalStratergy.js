@@ -65,6 +65,9 @@ passport.use(
             result.rows[0].password
           );
 
+          // const isValid = true;
+          
+
           if (isValid) {
             //console.log("Valid password");
             return done(null, userExist);
