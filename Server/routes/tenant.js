@@ -4,7 +4,7 @@ const pool = require("../db");
 const { v4: uuidv4 } = require("uuid");
 const { hashPassword } = require("../middleware/hash");
 const { ensureAuthenticated } = require("../middleware/LoginChecker");
-const IsTenant = require("../middleware/IsTenant");
+const { IsTenant } = require("../middleware/IsTenant");
 const TenantController = require("../controllers/TenantController");
 const IsOwner = require("../middleware/IsOwner");
 
