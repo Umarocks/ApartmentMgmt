@@ -76,7 +76,7 @@ const adminController = {
       await pool.query(query1, params1);
 
       const query2 =
-        "INSERT INTO Tenant (tenant_id, Name, Ssn, age, perm_address, apt_no, Email,block_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);";
+        "INSERT INTO Tenant (tenant_id, Name, Ssn, age, perm_address, apt_no, Email,block_id,phone_no) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9);";
       const params2 = [
         emp_id,
         name,
@@ -86,6 +86,7 @@ const adminController = {
         apt_no,
         email,
         block_id,
+        phone,
       ]; // Parameters for the second query
       await pool.query(query2, params2);
 
