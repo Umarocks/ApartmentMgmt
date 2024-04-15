@@ -371,12 +371,12 @@ CREATE ROLE app_admin_role LOGIN PASSWORD 'admin_password';
 CREATE ROLE app_owner_role LOGIN PASSWORD 'owner_password';
 CREATE ROLE app_tenant_role LOGIN PASSWORD 'tenant_password';
 
-GRANT CONNECT ON DATABASE AptMgmt TO app_admin_role ;
-GRANT CONNECT ON DATABASE AptMgmt TO app_owner_role ;
-GRANT CONNECT ON DATABASE AptMgmt TO app_tenant_role ;
+-- GRANT CONNECT ON DATABASE AptMgmt TO app_admin_role ;
+-- GRANT CONNECT ON DATABASE AptMgmt TO app_owner_role ;
+-- GRANT CONNECT ON DATABASE AptMgmt TO app_tenant_role ;
 
 -- admin
-GRANT USAGE ON SCHEMA schema_name TO app_admin_role;
+-- GRANT USAGE ON SCHEMA schema_name TO app_admin_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_admin_role;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO app_admin_role;
 
@@ -384,13 +384,13 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO app_admin_role;
 
 -- owner
 -- Grant access to view their properties
-GRANT SELECT ON TABLE apartments TO app_owner_role;
+GRANT SELECT ON TABLE apartment TO app_owner_role;
 -- Grant access to manage (respond to) complaints related to their properties
-GRANT SELECT, UPDATE ON TABLE complaints TO app_owner_role;
+GRANT SELECT, UPDATE ON TABLE complaint TO app_owner_role;
 -- Grant access to view payments for their properties
-GRANT SELECT ON TABLE payments TO app_owner_role;
+GRANT SELECT ON TABLE payment TO app_owner_role;
 -- Grant access to view tenants for their properties
-GRANT SELECT ON tenants TO app_owner_role;
+GRANT SELECT ON tenant TO app_owner_role;
 
 
 --tenant
