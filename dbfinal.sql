@@ -9,6 +9,11 @@ CREATE DOMAIN PhoneNoDomain AS VARCHAR(15)
 	CHECK (VALUE ~ '^\+[0-9]{1,3}[0-9]{10}$');
  
 -- ensures uniqueness between the Admin and Maintenance_Staff tables for the Emp_ID attribute--
+CREATE DOMAIN EmpIDDomain AS VARCHAR(10)
+	CHECK (VALUE NOT IN (
+    	SELECT Emp_ID FROM Admin
+    	UNION ALL
+    	SELECT Emp_ID FROM Maintenance_Staff));
 
 CREATE DOMAIN AgeDomain AS INT
 	CHECK (VALUE >= 0 AND VALUE <= 120);
@@ -160,6 +165,47 @@ CREATE TABLE Apartment_application (
     Owner_id id,  
     PRIMARY KEY(Email)  
 );
+
+--  TABLES REQUIRED FOR ARCHIVING OF DATA OR DATA STORAGE
+
+CREATE TABLE tenant_archive (
+    tenant_id INT PRIMARY KEY,
+    age INT,
+    ssn VARCHAR(11),
+    name VARCHAR(255),
+    perm_address TEXT,
+    apt_no VARCHAR(255),
+    email VARCHAR(255),
+    archived_date DATE 
+);
+
+CREATE TABLE owner_archive (
+   owner_id id,
+    Name VARCHAR(20),
+    SSN VARCHAR(9) NOT NULL,
+    Phone_no phonenodomain NOT NULL,
+    Address VARCHAR(30),
+    Email emaildomain,
+    archived_date DATE
+    PRIMARY KEY (owner_id)
+    
+);
+
+CREATE TABLE apartment_archive (
+    Apt_No VARCHAR(10), 
+    Block_id INT, 
+    Bedrooms INT NOT NULL, 
+    Type VARCHAR(10) NOT NULL, 
+    Area INT NOT NULL, 
+    Floor INT NOT NULL, 
+    Address VARCHAR(50) NOT NULL, 
+    owner_id id,  
+    Archived_date DATE NOT NULL,  
+    PRIMARY KEY (Apt_No, Block_id)
+);
+
+
+
 
 -- Add foreign key constraints using ALTER TABLE statements
 ALTER TABLE Owner ADD CONSTRAINT fk_owner_login FOREIGN KEY (Email) REFERENCES Login ON UPDATE CASCADE ON DELETE CASCADE;

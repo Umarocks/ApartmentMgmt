@@ -367,16 +367,12 @@ ALTER TABLE parking ADD PRIMARY KEY (spot_no, block_id);
 
 
 
-CREATE ROLE app_admin_role LOGIN PASSWORD 'admin_password';
+CREATE ROLE admin_role LOGIN PASSWORD 'admin_password';
 CREATE ROLE app_owner_role LOGIN PASSWORD 'owner_password';
-CREATE ROLE app_tenant_role LOGIN PASSWORD 'tenant_password';
-
-GRANT CONNECT ON DATABASE AptMgmt TO app_admin_role ;
-GRANT CONNECT ON DATABASE AptMgmt TO app_owner_role ;
-GRANT CONNECT ON DATABASE AptMgmt TO app_tenant_role ;
+CREATE ROLE tenant_role LOGIN PASSWORD 'tenant_password';
+CREATE ROLE employee_role LOGIN PASSWORD 'tenant_password';
 
 -- admin
-GRANT USAGE ON SCHEMA schema_name TO app_admin_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_admin_role;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO app_admin_role;
 
