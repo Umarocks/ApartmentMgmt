@@ -159,6 +159,47 @@ CREATE TABLE Apartment_application (
     PRIMARY KEY(Email)  
 );
 
+--  TABLES REQUIRED FOR ARCHIVING OF DATA OR DATA STORAGE
+
+CREATE TABLE tenant_archive (
+    tenant_id INT PRIMARY KEY,
+    age INT,
+    ssn VARCHAR(11),
+    name VARCHAR(255),
+    perm_address TEXT,
+    apt_no VARCHAR(255),
+    email VARCHAR(255),
+    archived_date DATE 
+);
+
+CREATE TABLE owner_archive (
+   owner_id id,
+    Name VARCHAR(20),
+    SSN VARCHAR(9) NOT NULL,
+    Phone_no phonenodomain NOT NULL,
+    Address VARCHAR(30),
+    Email emaildomain,
+    archived_date DATE
+    PRIMARY KEY (owner_id)
+    
+);
+
+CREATE TABLE apartment_archive (
+    Apt_No VARCHAR(10), 
+    Block_id INT, 
+    Bedrooms INT NOT NULL, 
+    Type VARCHAR(10) NOT NULL, 
+    Area INT NOT NULL, 
+    Floor INT NOT NULL, 
+    Address VARCHAR(50) NOT NULL, 
+    owner_id id,  
+    Archived_date DATE NOT NULL,  
+    PRIMARY KEY (Apt_No, Block_id)
+);
+
+
+
+
 -- Add foreign key constraints using ALTER TABLE statements
 ALTER TABLE Owner ADD CONSTRAINT fk_owner_login FOREIGN KEY (Email) REFERENCES Login ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE Payment ADD CONSTRAINT fk_payment_owner FOREIGN KEY (Owner_id) REFERENCES Owner ON UPDATE CASCADE ON DELETE CASCADE;
