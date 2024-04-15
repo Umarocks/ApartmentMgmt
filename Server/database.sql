@@ -1,3 +1,23 @@
+--Domain Creation 
+CREATE DOMAIN EmailDomain AS VARCHAR(50)
+	CHECK (VALUE ~ '^[a-zA-Z0-9.%]+@[a-zA-Z]+\.[a-zA-Z]+$');
+
+CREATE DOMAIN PasswordDomain AS VARCHAR(15)
+	CHECK (VALUE ~ '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})[a-zA-Z0-9!@#$%^&*]+$');
+
+CREATE DOMAIN PhoneNoDomain AS VARCHAR(15)
+	CHECK (VALUE ~ '^\+[0-9]{1,3}[0-9]{10}$');
+ 
+-- ensures uniqueness between the Admin and Maintenance_Staff tables for the Emp_ID attribute--
+
+CREATE DOMAIN AgeDomain AS INT
+	CHECK (VALUE >= 0 AND VALUE <= 120);
+ 	
+CREATE DOMAIN ID AS VARCHAR(38);
+
+CREATE DOMAIN UserRole AS VARCHAR (15) 
+    CHECK (VALUE IN ('Admin','Employee','Owner','Tenant'));
+    
 -- Create table Owner
 CREATE TABLE Owner (
     Owner_id VARCHAR(38),
