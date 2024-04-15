@@ -9,6 +9,11 @@ CREATE DOMAIN PhoneNoDomain AS VARCHAR(15)
 	CHECK (VALUE ~ '^\+[0-9]{1,3}[0-9]{10}$');
  
 -- ensures uniqueness between the Admin and Maintenance_Staff tables for the Emp_ID attribute--
+CREATE DOMAIN EmpIDDomain AS VARCHAR(10)
+	CHECK (VALUE NOT IN (
+    	SELECT Emp_ID FROM Admin
+    	UNION ALL
+    	SELECT Emp_ID FROM Maintenance_Staff));
 
 CREATE DOMAIN AgeDomain AS INT
 	CHECK (VALUE >= 0 AND VALUE <= 120);
