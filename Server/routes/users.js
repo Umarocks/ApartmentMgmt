@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const pool = require("../db");
+const { phoneNumber } = require("../middleware/phone");
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   res.send("respond with a resource");
@@ -9,11 +10,8 @@ router.get("/", function (req, res, next) {
 router.post("/apply", async (req, res) => {
   const { email, name, address, apt_no, block_id, block_name, owner_id } =
     req.body;
-  let phoneNumber = "+" + req.body.phone;
-  phoneNumber = phoneNumber.replace(/-/g, "");
-  console.log(phoneNumber);
-  const phone = phoneNumber;
-  console.log(req.body);
+  const phone = phoneNumber(req.body.phone);
+
   try {
     await pool.query("BEGIN");
     const query1 =
