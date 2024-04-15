@@ -5,15 +5,21 @@ const { hashPassword } = require("../middleware/hash");
 const TenantController = {
   payRent: async (req, res) => {
     try {
-      const { mode, payment_date, amount, apt_no } = req.body;
+      const { mode } = req.body;
+
       const ownerResult = await pool.query(
         "select t.tenant_id,a.owner_id,t.email from tenant t  join apartment a on t.block_id = a.block_id and t.apt_no = a.apt_no where t.email like ($1);",
         [req.user.email]
       );
       const owner_id = ownerResult.rows[0].owner_id;
       const tenant_id = ownerResult.rows[0].tenant_id;
+      const amountResult = await pool.query(
+        "select rent_amount from rents where tenant_id like ($1) and owner_id like ($2);",
+        [tenant_id, owner_id]
+      );
       const date = new Date();
       const payment_id = "P" + uuidv4();
+      const amount = amountResult.rows[0].rent_amount;
       const result = await pool.query(
         "INSERT INTO payment (payment_id, mode, payment_date, amount, owner_id, tenant_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
         [payment_id, mode, date, amount, owner_id, tenant_id]
