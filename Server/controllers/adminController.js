@@ -2,6 +2,7 @@ const pool = require("../db");
 const { v4: uuidv4 } = require("uuid");
 const { hashPassword } = require("../middleware/hash");
 const { getRandomInt } = require("../middleware/randomIntId");
+const { phoneNumber } = require("../middleware/phone");
 
 const adminController = {
   createAdmin: async (req, res) => {
@@ -9,10 +10,7 @@ const adminController = {
     console.log(password);
     const emp_id = "A" + uuidv4();
     const { name, shift_timings, email } = req.body;
-    let phoneNumber = "+" + req.body.phone;
-    phoneNumber = phoneNumber.replace(/-/g, "");
-    console.log(phoneNumber);
-    const phone = phoneNumber;
+    const phone = phoneNumber(req.body.phone);
     try {
       await pool.query("BEGIN");
       const query1 =
@@ -52,10 +50,7 @@ const adminController = {
       block_name,
       apt_address,
     } = req.body;
-    let phoneNumber = "+" + req.body.phone;
-    phoneNumber = phoneNumber.replace(/-/g, "");
-    console.log(phoneNumber);
-    const phone = phoneNumber;
+    const phone = phoneNumber(req.body.phone);
     const getBlockId = await pool.query(
       "select block_id from block where block_name like ($1) and address like ($2);",
       [block_name, apt_address]
@@ -68,6 +63,7 @@ const adminController = {
     if (apt_check.rows.length <= 0) {
       return res.status(404).json({ message: "Apartment Not Found" });
     }
+    // ADD RENT THING HERE SO IT IS DECIDED WHILE TENANT IS CREATED
     try {
       await pool.query("BEGIN"); // Start transaction
       const query1 =
@@ -108,10 +104,8 @@ const adminController = {
     const password = hashPassword(req.body.password);
     const owner_id = "O" + uuidv4();
     const { name, ssn, address, email } = req.body;
-    let phoneNumber = "+" + req.body.phone_no;
-    phoneNumber = phoneNumber.replace(/-/g, "");
-    console.log(phoneNumber);
-    const phone_no = phoneNumber;
+    const phone_no = phoneNumber(req.body.phone);
+
     try {
       await pool.query("BEGIN");
       const query1 =
@@ -298,7 +292,9 @@ const adminController = {
     const password = hashPassword(req.body.password);
     console.log(password);
     const emp_id = "E" + uuidv4();
-    const { name, phone, shift_timings, email, contract_length } = req.body;
+    const { name, shift_timings, email, contract_length } = req.body;
+    const phone = phoneNumber(req.body.phone);
+
     try {
       await pool.query("BEGIN");
       const query1 =

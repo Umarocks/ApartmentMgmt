@@ -7,15 +7,16 @@ const TenantController = {
     try {
       const { mode, payment_date, amount, apt_no } = req.body;
       const ownerResult = await pool.query(
-        "select owner_id from tenant t left join apartment a on t.apt_no = a.apt_no where t.tenant_id like ($1);",
-        [req.user.tenant_id]
+        "select t.tenant_id,a.owner_id,t.email from tenant t  join apartment a on t.block_id = a.block_id and t.apt_no = a.apt_no where t.email like ($1);",
+        [req.user.email]
       );
       const owner_id = ownerResult.rows[0].owner_id;
+      const tenant_id = ownerResult.rows[0].tenant_id;
       const date = new Date();
       const payment_id = "P" + uuidv4();
       const result = await pool.query(
         "INSERT INTO payment (payment_id, mode, payment_date, amount, owner_id, tenant_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-        [payment_id, mode, date, amount, owner_id, req.user.tenant_id]
+        [payment_id, mode, date, amount, owner_id, tenant_id]
       );
       res.json(result.rows[0]);
     } catch (error) {
@@ -29,9 +30,14 @@ const TenantController = {
       const { complaint_description } = req.body;
       const date = new Date();
       const complaint_id = "CP" + uuidv4();
+      const tenantIdSearch = await pool.query(
+        "select tenant_id from tenant where email like ($1)",
+        [req.user.email]
+      );
+      const tenant_id = tenantIdSearch.rows[0].tenant_id;
       const result = await pool.query(
         "INSERT INTO Complaint (complaint_id ,complaint_description, complaint_date ,tenant_id) VALUES ($1, $2, $3, $4) RETURNING *",
-        [complaint_id, complaint_description, date, req.user.tenant_id]
+        [complaint_id, complaint_description, date, tenant_id]
       );
       res.json(result.rows[0]);
     } catch (error) {
@@ -60,9 +66,14 @@ const TenantController = {
     try {
       const date = new Date();
       const complaint_id = "CP" + uuidv4();
+      const tenantIdSearch = await pool.query(
+        "select tenant_id from tenant where email like ($1)",
+        [req.user.email]
+      );
+      const tenant_id = tenantIdSearch.rows[0].tenant_id;
       const result = await pool.query(
         "INSERT INTO Complaint (complaint_id ,complaint_description, complaint_date ,tenant_id) VALUES ($1, $2, $3, $4) RETURNING *",
-        [complaint_id, "Regular Maintainence", date, req.user.tenant_id]
+        [complaint_id, "Regular Maintainence", date, tenant_id]
       );
       res.json(result.rows[0]);
     } catch (error) {

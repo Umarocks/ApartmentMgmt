@@ -1,21 +1,27 @@
 var express = require("express");
 var router = express.Router();
-
+const pool = require("../db");
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
-
-router.get("/apply", async (req, res, next) => {
-  const { email, name, phone, address, apt_no, block_name } = req.body;
+// figure out how to find block id and owner id. this is messy and collisions
+router.post("/apply", async (req, res) => {
+  const { email, name, address, apt_no, block_id, block_name, owner_id } =
+    req.body;
+  let phoneNumber = "+" + req.body.phone;
+  phoneNumber = phoneNumber.replace(/-/g, "");
+  console.log(phoneNumber);
+  const phone = phoneNumber;
+  console.log(req.body);
   try {
     await pool.query("BEGIN");
     const query1 =
-      "SELECT OWNER_ID FROM OWNER WHERE OWNER_ID IN (SELECT * FROM APARTMENT WHERE ADDRESS LIKE ($1) AND BLOCK_NAME LIKE ($2) AND APT_NO LIKE ($3));";
-    const result = await pool.query(query1, [address, block_name, apt_no]);
-    const { block_id, owner_id } = result.rows[0];
+      "SELECT OWNER_ID FROM OWNER WHERE OWNER_ID IN (SELECT * FROM APARTMENT WHERE ADDRESS LIKE ($1) AND block_id LIKE ($2) AND apt_no LIKE ($3));";
+    const result = await pool.query(query1, [address, block_id, apt_no]);
+    // const { block_id, owner_id } = result.rows[0];
     const query2 =
-      "INSERT INTO apartment_application (email,phone,name,owner_id,apt_no,address,block_id) VALUES ($1,$2,$3,$4,$5,$6);";
+      "INSERT INTO apartment_application (email,phone,name,owner_id,apt_no,addresss,block_id) VALUES ($1,$2,$3,$4,$5,$6,$7);";
     await pool.query(query2, [
       email,
       phone,

@@ -37,10 +37,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./middleware/LocalStratergy");
 
-// app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
-app.use("/users", usersRouter);
+
 app.use("/owner", ownerRouter);
 app.use("/tenant", tenantRouter);
 app.use("/employee", employeeRouter);
