@@ -17,7 +17,7 @@ CREATE DOMAIN ID AS VARCHAR(38);
 
 CREATE DOMAIN UserRole AS VARCHAR (15) 
     CHECK (VALUE IN ('Admin','Employee','Owner','Tenant'));
-    
+
 -- Create table Owner
 CREATE TABLE Owner (
     Owner_id VARCHAR(38),
