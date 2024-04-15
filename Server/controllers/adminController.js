@@ -8,7 +8,11 @@ const adminController = {
     const password = hashPassword(req.body.password);
     console.log(password);
     const emp_id = "A" + uuidv4();
-    const { name, phone, shift_timings, email } = req.body;
+    const { name, shift_timings, email } = req.body;
+    let phoneNumber = "+" + req.body.phone;
+    phoneNumber = phoneNumber.replace(/-/g, "");
+    console.log(phoneNumber);
+    const phone = phoneNumber;
     try {
       await pool.query("BEGIN");
       const query1 =
@@ -41,7 +45,6 @@ const adminController = {
     const {
       name,
       ssn,
-      phone,
       perm_address,
       email,
       age,
@@ -49,6 +52,10 @@ const adminController = {
       block_name,
       apt_address,
     } = req.body;
+    let phoneNumber = "+" + req.body.phone;
+    phoneNumber = phoneNumber.replace(/-/g, "");
+    console.log(phoneNumber);
+    const phone = phoneNumber;
     const getBlockId = await pool.query(
       "select block_id from block where block_name like ($1) and address like ($2);",
       [block_name, apt_address]
@@ -99,7 +106,11 @@ const adminController = {
   createOwner: async (req, res) => {
     const password = hashPassword(req.body.password);
     const owner_id = "O" + uuidv4();
-    const { name, ssn, phone_no, address, email } = req.body;
+    const { name, ssn, address, email } = req.body;
+    let phoneNumber = "+" + req.body.phone_no;
+    phoneNumber = phoneNumber.replace(/-/g, "");
+    console.log(phoneNumber);
+    const phone_no = phoneNumber;
     try {
       await pool.query("BEGIN");
       const query1 =

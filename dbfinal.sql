@@ -154,7 +154,9 @@ CREATE TABLE Apartment_application (
     Email emaildomain,  
     Phone phonenodomain NOT NULL,
     Name CHAR(20),  
-    Apt_address VARCHAR(50),  
+    Apt_no VARCHAR(10),
+    addresss VARCHAR(50),
+    block_id INT,  
     Owner_id id,  
     PRIMARY KEY(Email)  
 );
