@@ -282,16 +282,6 @@ const adminController = {
     }
   },
 
-  //                        Table "public.maintenance_staff"
-  //      Column      |         Type          | Collation | Nullable | Default
-  // -----------------+-----------------------+-----------+----------+---------
-  //  emp_id          | character varying(10) |           | not null |
-  //  name            | character(10)         |           |          |
-  //  phone           | character varying(10) |           |          |
-  //  shift_timings   | character varying(50) |           |          |
-  //  contract_length | character varying(20) |           |          |
-  //  role            | character varying(20) |           |          |
-  //  email           | character varying(50) |           |          |
   createEmployee: async (req, res) => {
     const password = hashPassword(req.body.password);
     console.log(password);

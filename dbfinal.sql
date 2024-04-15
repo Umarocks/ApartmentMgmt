@@ -180,3 +180,84 @@ ALTER TABLE Rents ADD CONSTRAINT fk_rents_tenant FOREIGN KEY (Tenant_id) REFEREN
 ALTER TABLE Rents ADD CONSTRAINT fk_rents_owner FOREIGN KEY (Owner_id) REFERENCES Owner ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE Apartment_application ADD CONSTRAINT fk_apartment_application_login FOREIGN KEY (Email) REFERENCES Login ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE Apartment_application ADD CONSTRAINT fk_apartment_application_owner FOREIGN KEY (Owner_id) REFERENCES Owner ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+CREATE ROLE app_admin_role LOGIN PASSWORD 'admin_password';
+CREATE ROLE app_owner_role LOGIN PASSWORD 'owner_password';
+CREATE ROLE app_tenant_role LOGIN PASSWORD 'tenant_password';
+
+-- GRANT CONNECT ON DATABASE AptMgmt TO app_admin_role ;
+-- GRANT CONNECT ON DATABASE AptMgmt TO app_owner_role ;
+-- GRANT CONNECT ON DATABASE AptMgmt TO app_tenant_role ;
+
+-- admin
+-- GRANT USAGE ON SCHEMA schema_name TO app_admin_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_admin_role;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO app_admin_role;
+
+
+
+-- owner
+-- Grant access to view their properties
+GRANT SELECT ON TABLE apartment TO app_owner_role;
+-- Grant access to manage (respond to) complaints related to their properties
+GRANT SELECT, UPDATE ON TABLE complaint TO app_owner_role;
+-- Grant access to view payments for their properties
+GRANT SELECT ON TABLE payment TO app_owner_role;
+-- Grant access to view tenants for their properties
+GRANT SELECT ON tenant TO app_owner_role;
+
+
+--tenant
+-- Grant access to make payments and view their own payments
+GRANT INSERT, SELECT ON TABLE payment TO app_tenant_role;
+-- Grant access to file and view their complaints
+GRANT INSERT, SELECT ON TABLE complaint TO app_tenant_role;
+-- Grant access to view their apartment details
+GRANT SELECT ON TABLE apartment TO app_tenant_role;
+
+--VIEWS
+CREATE VIEW TenantInformation AS 
+SELECT t.Tenant_id, t.Name AS Tenant_Name, t.SSN AS Tenant_SSN, t.Age, t.Perm_address AS Tenant_Address, a.Apt_No, a.Block_id, a.Bedrooms, a.Type AS Apartment_Type, a.Area AS Apartment_Area, a.Floor, a.Address AS Apartment_Address
+FROM Tenant t
+JOIN Apartment a ON t.Apt_no = a.Apt_No;
+
+CREATE VIEW TenantInformation AS 
+SELECT t.Tenant_id, t.Name AS Tenant_Name, t.SSN AS Tenant_SSN, t.Age, t.Perm_address AS Tenant_Address, a.Apt_No, a.Block_id, a.Bedrooms, a.Type AS Apartment_Type, a.Area AS Apartment_Area, a.Floor, a.Address AS Apartment_Address
+FROM Tenant t
+JOIN Apartment a ON t.Apt_no = a.Apt_No;
+
+CREATE VIEW ComplaintHistory AS
+SELECT c.Complaint_ID, c.Complaint_description, c.Complaint_date, 
+       CASE 
+            WHEN c.Tenant_id IS NOT NULL THEN 'Tenant'
+            WHEN c.Emp_ID IS NOT NULL THEN 'Maintenance Staff'
+            ELSE 'Unknown'
+       END AS Complainant_Type,
+       CASE 
+            WHEN c.Tenant_id IS NOT NULL THEN t.Name
+            WHEN c.Emp_ID IS NOT NULL THEN m.Name
+            ELSE NULL
+       END AS Complainant_Name
+FROM Complaint c
+LEFT JOIN Tenant t ON c.Tenant_id = t.Tenant_id
+LEFT JOIN Maintenance_Staff m ON c.Emp_ID = m.Emp_ID;
+
+CREATE VIEW ApartmentAvailability AS
+SELECT a.Apt_No, a.Block_id, 
+       CASE
+            WHEN p.Tenant_id IS NULL THEN 'Vacant'
+            ELSE 'Occupied'
+       END AS Availability
+FROM Apartment a
+LEFT JOIN Parking p ON a.Apt_No = p.Tenant_id; 
+
+
+CREATE VIEW AdminDashboard AS
+SELECT 
+    (SELECT COUNT(*) FROM Tenant) AS Total_Tenants,
+    (SELECT COUNT(*) FROM Complaint) AS Total_Complaints,
+    (SELECT SUM(Amount) FROM Payment) AS Total_Payments,
+    (SELECT COUNT(*) FROM Maintenance_Staff) AS Total_Maintenance_Staff,
+    (SELECT COUNT(*) FROM Apartment) AS Total_Apartments,
+    (SELECT COUNT(*) FROM Parking) AS Total_Parking_Spots;
