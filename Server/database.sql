@@ -43,7 +43,7 @@ CREATE TABLE Payment (
 -- Create table Login
 CREATE TABLE Login (
     Email VARCHAR(50),
-    Password VARCHAR(72) NOT NULL,
+    password VARCHAR(72) NOT NULL,
     Role VARCHAR(15) NOT NULL,
     PRIMARY KEY (Email)
 );
