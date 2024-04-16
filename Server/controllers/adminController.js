@@ -321,6 +321,33 @@ const adminController = {
       res.status(500).send("Error during Employee creation");
     }
   },
+  createParking: async (req, res) => {
+    const { spot_no, type, block_id, tenant_id } = req.body;
+    try {
+      const checkblock = await pool.query(
+        "SELECT * FROM block where block_id = $1",
+        [block_id]
+      );
+      if (checkblock.rows.length > 0) {
+        try {
+          await pool.query("BEGIN");
+          const query1 =
+            "INSERT INTO parking (spot_no,type,block_id,tenant_id) VALUES ($1,$2,$3,$4);";
+          await pool.query(query1, [spot_no, type, block_id, tenant_id]);
+          await pool.query("COMMIT");
+          res.send("Parking creation successful.");
+        } catch (error) {
+          await pool.query("ROLLBACK");
+          console.error("Error in transaction", error.stack);
+          res.status(500).send("Error during Employee creation");
+        }
+      }
+    } catch (error) {
+      await pool.query("ROLLBACK");
+      console.error("Error in transaction", error.stack);
+      res.status(500).send("Error during Employee creation");
+    }
+  },
 };
 
 module.exports = { adminController };

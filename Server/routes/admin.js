@@ -103,6 +103,12 @@ router.post(
   IsAdmin,
   adminController.createEmployee
 );
+router.post(
+  "/createParking",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.createParking
+);
 
 module.exports = router;
 
@@ -123,3 +129,4 @@ module.exports = router;
 
 // TO DO:
 // { NONE}
+// create parking slot

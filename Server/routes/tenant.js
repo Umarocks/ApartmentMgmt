@@ -49,3 +49,7 @@ module.exports = router;
 // Tenant can file regular maintenance {Done}
 
 // Tenant can see the alloted parking slot.
+
+// parking
+// employee
+// maintains
