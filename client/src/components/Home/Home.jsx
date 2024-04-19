@@ -7,6 +7,15 @@ const Home = () => {
   return (
     <div>
         <Sidebar/>
+        <img src="https://bcassetcdn.com/public/blog/wp-content/uploads/2023/07/28140224/Urban-City-Apartment-by-marcololstudio.png" alt="ALMS Logo" className="mx-auto my-4">
+        <div className="flex-1 p-10">
+                    <div className="flex justify-end space-x-4 mb-6">
+                        <button id="homeBtn" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Home</button>
+                        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact Us</button>
+                        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Login</button>
+                    </div>
+                </div>
+
     </div>
   );
 }
