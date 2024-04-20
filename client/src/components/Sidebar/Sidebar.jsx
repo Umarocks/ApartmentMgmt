@@ -11,7 +11,13 @@ const Sidebar = () => {
         {/* <h1>Welcome to Apartment Management System</h1> */}
         <div className="sidebar">
         <h2 className='logo'>Apartment.co</h2>
-        <ul>
+              <ul>
+                   <li className='login'>
+                <Link to="/login">
+                <FontAwesomeIcon icon={faUser} />
+                <span style={{ marginLeft: '8px' }}>Login</span>
+                </Link>
+            </li>
             <li className='signup'>
                 <Link to="/signup">
                 <FontAwesomeIcon icon={faUser} />

@@ -1,0 +1,59 @@
+
+import React, { useRef } from "react";
+import Sidebar from "../Sidebar/Sidebar";
+import "./Login.css"; // Import CSS file for login component styling
+import axios from "axios";
+
+const Login = () => {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const username = emailRef.current.value;
+    const password = passwordRef.current.value;
+    console.log(username);
+    console.log(password);
+    // Check if email and password are valid
+    if (username && password) {
+      // Perform login logic here
+      axios
+        .post("http://localhost:3000/auth/login", { username, password })
+        .then((response) => {
+          // Handle the response data
+          console.log(response.data);
+        })
+        .catch((error) => {
+          // Handle any errors
+          console.error(error);
+        });
+    } else {
+      // Display error message for invalid email or password
+      console.log("Invalid email or password");
+    }
+  };
+
+  return (
+    <div className="login-page">
+      <Sidebar />
+      <div className="login-form-container">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2>Log In</h2>
+          <div className="form-group">
+            <label htmlFor="email">Email Address:</label>
+            <input type="email" id="email" name="email" ref={emailRef} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input type="password" id="password" name="password" ref={passwordRef} />
+          </div>
+          <button className="submit-button" type="submit">
+            Log In
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

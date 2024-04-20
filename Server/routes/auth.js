@@ -11,16 +11,18 @@ const {
 router.post(
   "/login",
   passport.authenticate("local", {
-    failureRedirect: "/auth/login",
-    successRedirect: "/addTodo",
     failureMessage: true,
   }),
   async (req, res) => {
     if (req.isAuthenticated()) {
       console.log("Endpt hit");
-      res.redirect("/auth/home");
-
-      next();
+      res.status(200).json({
+        auth: true,
+        data: {
+          email: req.user.email,
+          role: req.user.role,
+        },
+      });
     }
   }
 );
