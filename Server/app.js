@@ -30,13 +30,7 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  cookieSession({
-    name: "auth-session",
-    keys: ["secret-new", "secret-old"],
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  })
-);
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(

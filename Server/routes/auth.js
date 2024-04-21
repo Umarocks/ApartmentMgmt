@@ -16,9 +16,6 @@ router.post(
   async (req, res) => {
     if (req.isAuthenticated()) {
       console.log("Endpt hit");
-      console.log(JSON.stringify(res.cookie));
-      res.cookie("yourCookieName", req.user.email);
-      console.log("Cookie set:", req.cookies);
       res.status(200).json({
         auth: true,
         data: {
@@ -30,16 +27,14 @@ router.post(
   }
 );
 
-router.get("/logout", ensureAuthenticated, (req, res, next) => {
-  console.log(req.cookies);
-  res.clearCookie();
-  req.logout(function (err) {
-    console.log(err);
-    req.session.destroy(function (err) {
-      res.render("home");
-    });
+router.post("/logout", ensureAuthenticated, (req, res, next) => {
+  req.logout();
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.clearCookie("connect.sid");
+    res.status(200).json({ message: "logged out" });
   });
-  console.log("logged out");
-  res.status(200).json({ message: "logged out" });
 });
 module.exports = router;

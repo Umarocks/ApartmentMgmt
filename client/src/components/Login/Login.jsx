@@ -28,7 +28,10 @@ const Login = () => {
         .then((response) => {
           // Handle the response data
           console.log(response.data);
-          if (response.data.data.role == "Admin") {
+          if (
+            response.data.data.role == "Admin" ||
+            response.data.data.role == "Tenant"
+          ) {
             // Redirect to dashboard
 
             console.log("Redirecting to admin dashboard");
