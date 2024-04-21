@@ -1,4 +1,3 @@
-
 import React, { useRef } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import "./Login.css"; // Import CSS file for login component styling
@@ -45,7 +44,12 @@ const Login = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" ref={passwordRef} />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              ref={passwordRef}
+            />
           </div>
           <button className="submit-button" type="submit">
             Log In
