@@ -14,12 +14,14 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import MyContext from "./MyContext";
+import Logout from "./components/Logout/Logout";
+
 function App() {
   const [menuItems, setMenuItems] = useState([
-    { link: "/login", faValue: faUser, value: "Login" },
-    { link: "/signup", faValue: faUser, value: "Sign Up" },
-    { link: "/pay-rent", faValue: faMoneyBill, value: "Pay Rent" },
-    { link: "/file-complaint", faValue: faCheck, value: "File Complaint" },
+    { link: "/login", faValue: "faUser", value: "Login" },
+    { link: "/signup", faValue: "faUser", value: "Sign Up" },
+    { link: "/pay-rent", faValue: "faMoneyBill", value: "Pay Rent" },
+    { link: "/file-complaint", faValue: "faCheck", value: "File Complaint" },
   ]);
   return (
     <MyContext.Provider value={{ menuItems, setMenuItems }}>
@@ -31,6 +33,7 @@ function App() {
           <Route path="/pay-rent" element={<Payrent />} />
           <Route path="/file-complaint" element={<Filecomplaint />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>
     </MyContext.Provider>

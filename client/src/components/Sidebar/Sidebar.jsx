@@ -11,8 +11,9 @@ import {
 import SideBarList from "../SideBarList/SideBarList";
 import MyContext from "../../MyContext"; // Import your MyContext here
 
-const Sidebar = (props) => {
+const Sidebar = () => {
   const { menuItems, setMenuItems } = useContext(MyContext);
+  console.log(menuItems);
   return (
     <div className="home">
       {/* <h1>Welcome to Apartment Management System</h1> */}

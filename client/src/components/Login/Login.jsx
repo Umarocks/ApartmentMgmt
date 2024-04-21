@@ -1,11 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import "./Login.css"; // Import CSS file for login component styling
 import axios from "axios";
-
+import MyContext from "../../MyContext";
 const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const { setMenuItems } = useContext(MyContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +30,7 @@ const Login = () => {
           console.log(response.data);
           if (response.data.data.role == "Admin") {
             // Redirect to dashboard
+
             console.log("Redirecting to admin dashboard");
             window.location.href = "/admin";
           }
