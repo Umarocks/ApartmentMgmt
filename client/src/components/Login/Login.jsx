@@ -21,6 +21,11 @@ const Login = () => {
         .then((response) => {
           // Handle the response data
           console.log(response.data);
+          if (response.data.data.role == "Admin") {
+            // Redirect to dashboard
+            console.log("Redirecting to admin dashboard");
+            window.location.href = "/admin";
+          }
         })
         .catch((error) => {
           // Handle any errors

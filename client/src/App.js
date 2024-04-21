@@ -5,6 +5,7 @@ import Signup from "./components/Signup/Signup";
 import Payrent from "./components/PayRent/Payrent";
 import Filecomplaint from "./components/FileComplaint/Filecomplaint";
 import Login from "./components/Login/Login";
+import Admin from "./components/Admin/Admin";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/pay-rent" element={<Payrent />} />
         <Route path="/file-complaint" element={<Filecomplaint />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
