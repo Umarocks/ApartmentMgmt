@@ -6,6 +6,7 @@ const logger = require("morgan");
 const cors = require("cors");
 const passport = require("passport");
 const expressSession = require("express-session");
+const cookieSession = require("cookie-session");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -16,20 +17,32 @@ const tenantRouter = require("./routes/tenant");
 const employeeRouter = require("./routes/employee");
 
 const app = express();
-
+const corsOptions = {
+  origin: "http://localhost:3001",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
 //set view engine to ejs
 app.set("view engine", "ejs");
 
 app.use(logger("dev"));
-app.use(cors());
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(
+  cookieSession({
+    name: "auth-session",
+    keys: ["secret-new", "secret-old"],
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   expressSession({
     secret: "mySecretKey",
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   })
 );

@@ -6,7 +6,8 @@ const pool = require("../db");
 passport.serializeUser(async (user, done) => {
   console.log("serialized user");
   console.log(user);
-  done(null, user.email, user.password);
+  console.log(JSON.stringify(user));
+  done(null, user.email);
 });
 
 passport.deserializeUser(async (user, done) => {
@@ -66,7 +67,6 @@ passport.use(
           );
 
           // const isValid = true;
-          
 
           if (isValid) {
             //console.log("Valid password");

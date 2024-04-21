@@ -17,7 +17,13 @@ const Login = () => {
     if (username && password) {
       // Perform login logic here
       axios
-        .post("http://localhost:3000/auth/login", { username, password })
+        .post(
+          "http://localhost:3000/auth/login",
+          { username, password },
+          {
+            withCredentials: true,
+          }
+        )
         .then((response) => {
           // Handle the response data
           console.log(response.data);
