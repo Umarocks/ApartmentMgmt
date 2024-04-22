@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-
+import axios from "axios";
 function CreateAdmin() {
   const [formData, setFormData] = useState({
     email: "",
@@ -14,8 +14,8 @@ function CreateAdmin() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = (e) => {
+  const [showSuccess, setShowSuccess] = useState(false);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedFormData = {
       email: formRef.current.email.value,
@@ -26,7 +26,23 @@ function CreateAdmin() {
     };
     setFormData(updatedFormData);
 
-    console.log(updatedFormData);
+    // ...
+
+    await axios
+      .post("http://localhost:3000/admin/createAdmin", formData, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        // Handle success
+        console.log(response.data);
+        setShowSuccess(true);
+      })
+      .catch((error) => {
+        // Handle error
+        console.error(error);
+      });
+
+    // ...
   };
 
   return (
@@ -75,6 +91,9 @@ function CreateAdmin() {
 
         <button type="submit">Submit</button>
       </form>
+      {showSuccess && (
+        <div style={{ backgroundColor: "green" }}>Admin Created</div>
+      )}
     </div>
   );
 }
