@@ -24,6 +24,7 @@ function App() {
     { link: "/pay-rent", faValue: "faMoneyBill", value: "Pay Rent" },
     { link: "/file-complaint", faValue: "faCheck", value: "File Complaint" },
   ]);
+
   return (
     <MyContext.Provider value={{ menuItems, setMenuItems }}>
       <BrowserRouter>
@@ -33,10 +34,10 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/pay-rent" element={<Payrent />} />
           <Route path="/file-complaint" element={<Filecomplaint />} />
+          {/* <Route path="/createAdmin" element={<CreateAdmin />} /> */}
           <Route path="/admin" element={<Admin />}>
-            <Route path="createAdmin" element={<CreateAdmin />} />
-            {/* <Route path="/create-tenant" element={<CreateTenant />} /> */}
-            {/* Add other admin functionalities as nested routes */}
+            <Route path="/admin/createadmin" element={<CreateAdmin />} />
+            {/* <Route path="/createadmin" element={<CreateAdmin />} /> */}
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Routes>

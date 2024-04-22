@@ -25,6 +25,7 @@ function CreateAdmin() {
       shift_timings: formRef.current.shift_timings.value,
     };
     setFormData(updatedFormData);
+
     console.log(updatedFormData);
   };
 
