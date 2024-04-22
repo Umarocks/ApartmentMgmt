@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import "./Admin.css";
 import {
   faUser,
   faMoneyBill,
@@ -27,17 +28,9 @@ const Admin = () => {
 
   return (
     <div className="admin-container">
-      {/* <div className="sidebar">
-        <ul>
-          <li>
-            <button onClick={handleLogout}>Logout</button>
-          </li>
-        </ul>
-      </div> */}
       <Sidebar />
       <div className="dashboard">
         <h1>Welcome, Admin!</h1>
-        {/* Add more dashboard content here */}
       </div>
     </div>
   );

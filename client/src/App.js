@@ -6,6 +6,7 @@ import Payrent from "./components/PayRent/Payrent";
 import Filecomplaint from "./components/FileComplaint/Filecomplaint";
 import Login from "./components/Login/Login";
 import Admin from "./components/Admin/Admin";
+import CreateAdmin from "./components/Admin/Create Admin/CreateAdmin";
 import React, { useState } from "react";
 import {
   faUser,
@@ -32,7 +33,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/pay-rent" element={<Payrent />} />
           <Route path="/file-complaint" element={<Filecomplaint />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />}>
+            <Route path="createAdmin" element={<CreateAdmin />} />
+            {/* <Route path="/create-tenant" element={<CreateTenant />} /> */}
+            {/* Add other admin functionalities as nested routes */}
+          </Route>
           <Route path="/logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>
