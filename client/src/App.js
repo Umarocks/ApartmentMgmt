@@ -7,6 +7,7 @@ import Filecomplaint from "./components/FileComplaint/Filecomplaint";
 import Login from "./components/Login/Login";
 import Admin from "./components/Admin/Admin";
 import CreateAdmin from "./components/Admin/Create Admin/CreateAdmin";
+import CreateOwner from "./components/Admin/Create Owner/CreateOwner";
 import React, { useState } from "react";
 import {
   faUser,
@@ -36,8 +37,10 @@ function App() {
           <Route path="/file-complaint" element={<Filecomplaint />} />
           {/* <Route path="/createAdmin" element={<CreateAdmin />} /> */}
           <Route path="/admin" element={<Admin />}>
-            <Route path="/admin/createadmin" element={<CreateAdmin />} />
-            {/* <Route path="/createadmin" element={<CreateAdmin />} /> */}
+            {/* <Route path="/admin/createadmin" element={<CreateAdmin />} /> */}
+            <Route path="createadmin" element={<CreateAdmin />} />
+            <Route path="createowner" element={<CreateOwner />} />{" "}
+            {/* Add this line */}
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Routes>

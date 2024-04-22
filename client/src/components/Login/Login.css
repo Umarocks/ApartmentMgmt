@@ -46,3 +46,12 @@ input[type="password"] {
 .submit-button:hover {
     background-color: #0056b3;
 }
+
+.error-banner{
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+}

@@ -13,8 +13,12 @@ import Sidebar from "../Sidebar/Sidebar";
 const Admin = () => {
   const adminMenuItem = [
     { link: "/login", faValue: "faUser", value: "Login" },
-    { link: "/admin/createadmin", faValue: "faUser", value: "Admin create" },
-    { link: "/pay-rent", faValue: "faMoneyBill", value: "Admin" },
+    { link: "/admin/createadmin", faValue: "faUser", value: "Create Admin" },
+    {
+      link: "/admin/createowner",
+      faValue: "faMoneyBill",
+      value: "Create Owner",
+    },
     {
       link: "/logout",
       faValue: "faCheck",

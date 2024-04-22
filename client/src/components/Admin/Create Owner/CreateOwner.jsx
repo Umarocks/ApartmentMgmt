@@ -1,12 +1,14 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-function CreateAdmin() {
+
+function CreateOwner() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     name: "",
-    phone: "",
-    shift_timings: "9:00 AM - 5:00 PM",
+    ssn: "",
+    phone_no: "",
+    address: "",
   });
 
   const formRef = useRef(null);
@@ -14,40 +16,44 @@ function CreateAdmin() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const [showSuccess, setShowSuccess] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const updatedFormData = {
       email: formRef.current.email.value,
       password: formRef.current.password.value,
       name: formRef.current.name.value,
-      phone: formRef.current.phone.value,
-      shift_timings: formRef.current.shift_timings.value,
+      ssn: formRef.current.ssn.value,
+      phone_no: formRef.current.phone_no.value,
+      address: formRef.current.address.value,
     };
+
     setFormData(updatedFormData);
+    console.log(updatedFormData);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/admin/createOwner",
+        updatedFormData,
+        {
+          withCredentials: true,
+        }
+      );
 
-    // ...
-
-    await axios
-      .post("http://localhost:3000/admin/createAdmin", formData, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        // Handle success
-        console.log(response.data);
-        setShowSuccess(true);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error(error);
-      });
-
-    // ...
+      console.log(response.data);
+      setShowSuccess(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div>
-      <h2>Create Admin</h2>
+      <h2>Create Owner</h2>
+      {showSuccess && <div className="Green-Success">Owner Created</div>}
+
       <form ref={formRef} onSubmit={handleSubmit}>
         <label>Email:</label>
         <input
@@ -73,27 +79,34 @@ function CreateAdmin() {
           onChange={handleChange}
         />
 
-        <label>Phone:</label>
+        <label>SSN:</label>
         <input
           type="text"
-          name="phone"
-          defaultValue={formData.phone}
+          name="ssn"
+          defaultValue={formData.ssn}
           onChange={handleChange}
         />
 
-        <label>Shift Timings:</label>
+        <label>Phone Number:</label>
         <input
           type="text"
-          name="shift_timings"
-          defaultValue={formData.shift_timings}
+          name="phone_no"
+          defaultValue={formData.phone_no}
+          onChange={handleChange}
+        />
+
+        <label>Address:</label>
+        <input
+          type="text"
+          name="address"
+          defaultValue={formData.address}
           onChange={handleChange}
         />
 
         <button type="submit">Submit</button>
       </form>
-      {showSuccess && <div className="Green-Success">Admin Created</div>}
     </div>
   );
 }
 
-export default CreateAdmin;
+export default CreateOwner;

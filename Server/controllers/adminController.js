@@ -104,14 +104,14 @@ const adminController = {
     const password = hashPassword(req.body.password);
     const owner_id = "O" + uuidv4();
     const { name, ssn, address, email } = req.body;
-    const phone_no = phoneNumber(req.body.phone);
+    const phone_no = phoneNumber(req.body.phone_no);
 
     try {
       await pool.query("BEGIN");
       const query1 =
         "INSERT INTO Login (Email,Password,Role) VALUES ($1,$2,$3);";
       await pool.query(query1, [email, password, "Owner"]);
-
+      console.log(phone_no);
       const query2 =
         "INSERT INTO Owner (owner_id, Name, Ssn, Phone_no, Address, Email) VALUES ($1,$2,$3,$4,$5,$6);";
       await pool.query(query2, [owner_id, name, ssn, phone_no, address, email]);
