@@ -31,15 +31,11 @@ function Logout() {
     }
   };
 
-  // useEffect(() => {
-  //   handleLogout();
-  // }, []);
+  useEffect(() => {
+    handleLogout();
+  }, []);
 
-  return (
-    <div>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-  );
+  return <div></div>;
 }
 
 export default Logout;
