@@ -28,7 +28,7 @@ function AllOwner() {
   }, []);
   return (
     <>
-      <h2>Total Complaint = {ComplaintInfor.length}</h2>
+      <h1>Total Complaint = {ComplaintInfor.length}</h1>
       <div className="Table">
         {ComplaintInfor.length > 0 && <Table data={ComplaintInfor} />}
       </div>

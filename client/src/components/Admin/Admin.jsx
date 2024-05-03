@@ -32,6 +32,11 @@ const Admin = () => {
       value: "Get Complaints Detail",
     },
     {
+      link: "/admin/createblock",
+      faValue: "faCheck",
+      value: "Create Block",
+    },
+    {
       link: "/logout",
       faValue: "faCheck",
       value: "LogOut",
