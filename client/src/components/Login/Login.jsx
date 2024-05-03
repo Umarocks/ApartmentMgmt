@@ -35,6 +35,11 @@ const Login = () => {
             console.log("Redirecting to admin dashboard");
             window.location.href = "/admin";
           }
+          if (response.data.data.role === "Tenant") {
+            // Redirect to dashboard
+            console.log("Redirecting to admin dashboard");
+            window.location.href = "/tenant";
+          }
         })
         .catch((error) => {
           // Handle any errors

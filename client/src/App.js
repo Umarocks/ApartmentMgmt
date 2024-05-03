@@ -43,11 +43,11 @@ function App() {
             <Route path="getallcomplaint" element={<AllComplaint />} />
             {/* Add this line */}
           </Route>
-          <Route path="owner" element={<Owner />}>
+          <Route path="/owner" element={<Owner />}>
             <Route path="viewproperties" element={<ViewProperties />} />
             <Route path="viewcomplaints" element={<ViewComplaints />} />
           </Route>
-          <Route path="tenant" element={<Owner />}>
+          <Route path="/tenant" element={<Tenant />}>
             <Route path="payrent" element={<PayRent />} />
             <Route path="filecomplaint" element={<FileComplaint />} />
           </Route>

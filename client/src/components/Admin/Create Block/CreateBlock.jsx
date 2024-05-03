@@ -1,5 +1,4 @@
-{
-    "block_name":"C",
-    "address":"{{$randomStreetAddress}}"
-}
-
+// {
+//     "block_name":"C",
+//     "address":"{{$randomStreetAddress}}"
+// }
