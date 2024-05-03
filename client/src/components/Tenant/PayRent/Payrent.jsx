@@ -1,11 +1,12 @@
 import React from 'react';
-import Sidebar from '../Sidebar/Sidebar';
+// import Sidebar from '../Sidebar/Sidebar';
 import './Payrent.css'; // Import CSS file for PayRent component styling
+import '../../Sidebar/Sidebar'
 
 const Payrent = () => {
   return (
     <div className="pay-rent-page">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="pay-rent-form-container">
         <form className="pay-rent-form">
           <div className="form-group">
