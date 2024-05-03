@@ -1,11 +1,11 @@
 .dashboard{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     width: auto;
     height: auto;
-    margin: auto;
+    margin: 5rem;
     overflow: hidden;
 
 }

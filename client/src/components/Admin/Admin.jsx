@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import "./Admin.css";
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutlet } from "react-router-dom";
 import MyContext from "../../MyContext";
 import Sidebar from "../Sidebar/Sidebar";
 import Table from "../Table/Table";
@@ -9,7 +9,7 @@ const Admin = () => {
   const [TenantInfor, setTenantInfor] = useState([]);
   const [tenantCount, setTenantCount] = useState("0");
   const adminMenuItem = [
-    { link: "/login", faValue: "faUser", value: "Login" },
+    { link: "/admin/", faValue: "faUser", value: "Home" },
     { link: "/admin/createadmin", faValue: "faUser", value: "Create Admin" },
     {
       link: "/admin/createowner",
@@ -53,6 +53,7 @@ const Admin = () => {
       console.error(error);
     }
   }, []);
+  const outlet = useOutlet();
   return (
     <div className="admin-container">
       <div className="sidebar-container">
@@ -64,7 +65,7 @@ const Admin = () => {
           <h2>Tenant Count = {tenantCount.count}</h2>
         </div>
         <div className="Table">
-          {TenantInfor && TenantInfor.length > 0 && (
+          {!outlet && TenantInfor && TenantInfor.length > 0 && (
             <Table data={TenantInfor} />
           )}
         </div>
