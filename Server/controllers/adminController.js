@@ -355,6 +355,17 @@ const adminController = {
       res.status(500).send("Error during Employee creation");
     }
   },
+  AllVacantApartments: async (req, res) => {
+    try {
+      const vacantApartments = await pool.query(
+        "SELECT * FROM public.apartmentavailability where availability like 'Vacant'"
+      );
+      res.send(vacantApartments.rows);
+    } catch (error) {
+      console.error("Error fetching vacant apartments", error.stack);
+      res.status(500).send("Error fetching vacant apartments");
+    }
+  },
 };
 
 module.exports = { adminController };

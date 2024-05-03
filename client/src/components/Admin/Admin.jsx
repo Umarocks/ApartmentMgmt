@@ -61,10 +61,12 @@ const Admin = () => {
       </div>
       <div className="dashboard">
         <div className="Content">
-          <div className="Header">
-            <h1>Welcome, Admin!</h1>
-            <h2>Tenant Count = {tenantCount.count}</h2>
-          </div>
+          {!outlet && (
+            <div className="Header">
+              <h1>Welcome, Admin!</h1>
+              <h2>Tenant Count = {tenantCount.count}</h2>
+            </div>
+          )}
           <div className="Table">
             {!outlet && TenantInfor && TenantInfor.length > 0 && (
               <Table data={TenantInfor} />
