@@ -1,31 +1,35 @@
 /* App.css */
-.sidebar {
+.sidebar-container {
   display: flex;
   flex-direction: column;
-    background-color: #767171;
-    width: 12%;
-    height: 100dvh;
-    position:relative;
-    
-  }
-  
-  .sidebar ul {
+  background-color: #767171;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: auto;
+  height: 100vh;
+  margin: auto;
+  margin-left: 0%;
+  margin-top: 0%;
+  overflow: hidden;
+}
+  .sidebar-container ul {
     list-style-type: none;
     padding: 0;
   }
   
-  .sidebar ul li {
+  .sidebar-container ul li {
     padding: 10px;
-    margin-top: 5%;
   }
   
-  .sidebar ul li a {
+  .sidebar-container ul li a {
     text-decoration: none;
     color: #000000;
     font-size: x-large;
   }
   
-  .sidebar ul li a:hover {
+  .sidebar-container ul li a:hover {
     color: #ffffff;
   }
   

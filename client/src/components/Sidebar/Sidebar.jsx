@@ -15,7 +15,7 @@ const Sidebar = () => {
   const { menuItems, setMenuItems } = useContext(MyContext);
   console.log(menuItems);
   return (
-    <div className="sidebar">
+    <div className="sidebar-container">
       <h2 className="logo">Apartment.co</h2>
       <ul>
         {menuItems.map((item) => (

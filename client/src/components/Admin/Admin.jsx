@@ -55,14 +55,20 @@ const Admin = () => {
   }, []);
   return (
     <div className="admin-container">
-      <Outlet />
-      <Sidebar />
+      <div className="sidebar-container">
+        <Sidebar />
+      </div>
       <div className="dashboard">
         <div className="Header">
           <h1>Welcome, Admin!</h1>
           <h2>Tenant Count = {tenantCount.count}</h2>
         </div>
-        {TenantInfor && TenantInfor.length > 0 && <Table data={TenantInfor} />}
+        <div className="Table">
+          {TenantInfor && TenantInfor.length > 0 && (
+            <Table data={TenantInfor} />
+          )}
+        </div>
+        <Outlet />
       </div>
     </div>
   );
