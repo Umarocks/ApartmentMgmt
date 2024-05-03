@@ -6,8 +6,8 @@ import Login from "./components/Login/Login";
 import Admin from "./components/Admin/Admin";
 import CreateAdmin from "./components/Admin/Create Admin/CreateAdmin";
 import CreateOwner from "./components/Admin/Create Owner/CreateOwner";
-import ViewProperties from "./components/Owner/View Properties/ViewProperties"
-import ViewComplaints from "./components/Owner/View Complaints/ViewComplaints"
+import ViewProperties from "./components/Owner/View Properties/ViewProperties";
+import ViewComplaints from "./components/Owner/View Complaints/ViewComplaints";
 import PayRent from "./components/Tenant/PayRent/Payrent";
 import FileComplaint from "./components/Tenant/FileComplaint/Filecomplaint";
 import React, { useState } from "react";
@@ -22,6 +22,7 @@ import Logout from "./components/Logout/Logout";
 import Owner from "./components/Owner/Owner";
 import Tenant from "./components/Tenant/Tenant";
 import CreateTenant from "./components/Admin/Create Tenant/CreateTenant";
+import AllOwner from "./components/Admin/AllOwner/AllOwner";
 
 function App() {
   const [menuItems, setMenuItems] = useState([
@@ -42,17 +43,17 @@ function App() {
             {/* <Route path="/admin/createadmin" element={<CreateAdmin />} /> */}
             <Route path="createadmin" element={<CreateAdmin />} />
             <Route path="createowner" element={<CreateOwner />} />
-            <Route path="createtenant" element={<CreateTenant />} />
-
+            <Route path="createtenant" element={<CreateTenant />} />{" "}
+            <Route path="getallowner" element={<AllOwner />} />
             {/* Add this line */}
           </Route>
-          <Route path="owner" element={<Owner/>}>
-            <Route path="viewproperties" element={<ViewProperties/>} />
-            <Route path="viewcomplaints" element={<ViewComplaints/>} />
+          <Route path="owner" element={<Owner />}>
+            <Route path="viewproperties" element={<ViewProperties />} />
+            <Route path="viewcomplaints" element={<ViewComplaints />} />
           </Route>
-          <Route path="tenant" element={<Owner/>}>
-            <Route path="payrent" element={<PayRent/>} />
-            <Route path="filecomplaint" element={<FileComplaint/>} />
+          <Route path="tenant" element={<Owner />}>
+            <Route path="payrent" element={<PayRent />} />
+            <Route path="filecomplaint" element={<FileComplaint />} />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Routes>

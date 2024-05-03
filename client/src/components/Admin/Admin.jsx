@@ -22,6 +22,11 @@ const Admin = () => {
       value: "Create Tenant",
     },
     {
+      link: "/admin/getallowner",
+      faValue: "faCheck",
+      value: "Get Owner Detail",
+    },
+    {
       link: "/logout",
       faValue: "faCheck",
       value: "LogOut",
