@@ -1,0 +1,10 @@
+.Create-Tenant input {
+    display: flex;
+}
+.Create-Tenant{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}

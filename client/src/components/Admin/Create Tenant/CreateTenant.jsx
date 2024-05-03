@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-
+import "./CreateTenant.css";
 //THIS IS UNFINISHED RN. I CAN ONLY PUT PEOPLE IN AN APARTMENT IF IT EXISTS SO NEED TO FIGURE THAT OUT
 
 function CreateTenant() {
@@ -56,109 +56,97 @@ function CreateTenant() {
       console.error(error);
     }
   };
-
   return (
-    <div>
+    <div className="Create-Tenant">
+      {showSuccess && <div className="Green-Success">Owner Created</div>}
       <h2>Create Tenant</h2>
       {showSuccess && <div className="Green-Success">Tenant Created</div>}
 
       <form ref={formRef} onSubmit={handleSubmit}>
-        <label>Email:</label>
+        <label className="form-label">Email:</label>
         <input
           type="email"
           name="email"
           defaultValue={formData.email}
           onChange={handleChange}
         />
-
-        <label>Password:</label>
+        <label className="form-label">Password:</label>
         <input
           type="password"
           name="password"
           defaultValue={formData.password}
           onChange={handleChange}
         />
-
-        <label>Name:</label>
+        <label className="form-label">Name:</label>
         <input
           type="text"
           name="name"
           defaultValue={formData.name}
           onChange={handleChange}
         />
-
-        <label>SSN:</label>
+        <label className="form-label">SSN:</label>
         <input
           type="text"
           name="ssn"
           defaultValue={formData.ssn}
           onChange={handleChange}
         />
-
-        <label>Phone Number:</label>
+        <label className="form-label">Phone Number:</label>
         <input
           type="text"
           name="phone_no"
           defaultValue={formData.phone_no}
           onChange={handleChange}
         />
-
-        <label>Address:</label>
+        <label className="form-label">Address:</label>
         <input
           type="text"
           name="address"
           defaultValue={formData.address}
           onChange={handleChange}
         />
-
-        <label>Age:</label>
+        <label className="form-label">Age:</label>
         <input
           type="number"
           name="Age"
           defaultValue={formData.Age}
           onChange={handleChange}
         />
-
-        <label>Permanent Address:</label>
+        <label className="form-label">Permanent Address:</label>
         <input
           type="text"
           name="perm_address"
           defaultValue={formData.perm_address}
           onChange={handleChange}
         />
-
-        <label>Apartment Number:</label>
+        <label className="form-label">Apartment Number:</label>
         <input
           type="text"
           name="apt_no"
           defaultValue={formData.apt_no}
           onChange={handleChange}
         />
-
-        <label>Phone:</label>
+        <label className="form-label">Phone:</label>
         <input
           type="text"
           name="phone"
           defaultValue={formData.phone}
           onChange={handleChange}
         />
-
-        <label>Block Name:</label>
+        <label className="form-label">Block Name:</label>
         <input
           type="text"
           name="block_name"
           defaultValue={formData.block_name}
           onChange={handleChange}
         />
-
-        <label>Apartment Address:</label>
+        <label className="form-label">Apartment Address:</label>
         <input
           type="text"
           name="apt_address"
           defaultValue={formData.apt_address}
           onChange={handleChange}
         />
-
         <div className="submit-btn">
           <button className="submit" type="submit">
             Submit

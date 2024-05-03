@@ -1,12 +1,13 @@
 .dashboard{
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: flex-start;
     align-items: center;
     width: auto;
     height: auto;
-    margin: 5rem;
+    margin: auto;
     overflow: hidden;
+    border: 5px solid red;
 
 }
 .admin-container{
@@ -15,7 +16,30 @@
     height: 100vh;
     margin: 0;
     flex-direction: row;
-    justify-content: space-evenly;
-
-
+    justify-content: flex-start;
+    
+    border: 5px solid yellow;
+    overflow: scroll;
 }
+
+.Content{
+display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    border: 5px solid rgb(14, 45, 216);
+}
+
+.Table{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+        border: 5px solid pink;
+    }
