@@ -27,6 +27,11 @@ const Admin = () => {
       value: "Get Owner Detail",
     },
     {
+      link: "/admin/getallcomplaint",
+      faValue: "faCheck",
+      value: "Get Complaints Detail",
+    },
+    {
       link: "/logout",
       faValue: "faCheck",
       value: "LogOut",

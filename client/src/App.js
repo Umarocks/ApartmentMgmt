@@ -11,12 +11,7 @@ import ViewComplaints from "./components/Owner/View Complaints/ViewComplaints";
 import PayRent from "./components/Tenant/PayRent/Payrent";
 import FileComplaint from "./components/Tenant/FileComplaint/Filecomplaint";
 import React, { useState } from "react";
-import {
-  faUser,
-  faMoneyBill,
-  faExclamationTriangle,
-  faCheck,
-} from "@fortawesome/free-solid-svg-icons";
+import AllComplaint from "./components/Admin/AllComplaint/AllComplaint";
 import MyContext from "./MyContext";
 import Logout from "./components/Logout/Logout";
 import Owner from "./components/Owner/Owner";
@@ -45,6 +40,7 @@ function App() {
             <Route path="createowner" element={<CreateOwner />} />
             <Route path="createtenant" element={<CreateTenant />} />{" "}
             <Route path="getallowner" element={<AllOwner />} />
+            <Route path="getallcomplaint" element={<AllComplaint />} />
             {/* Add this line */}
           </Route>
           <Route path="owner" element={<Owner />}>
