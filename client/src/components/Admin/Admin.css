@@ -3,5 +3,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    width: auto;
+    height: 100%;
+    margin: auto;
+    overflow: hidden;
+
+}
+.admin-container{
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    margin: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
 }

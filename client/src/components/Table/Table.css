@@ -1,5 +1,7 @@
-/* Table styles */
+/* Table styles
 .table {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     border-collapse: collapse;
 }
@@ -22,3 +24,22 @@
 .table tr:hover {
     background-color: #e6e6e6;
 }
+.table th.column-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4185a0;
+    vertical-align: middle;
+}
+
+#Table-Attribute{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4185a0;
+    vertical-align: middle;
+} */

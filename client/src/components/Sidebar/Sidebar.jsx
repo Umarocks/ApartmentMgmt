@@ -15,21 +15,18 @@ const Sidebar = () => {
   const { menuItems, setMenuItems } = useContext(MyContext);
   console.log(menuItems);
   return (
-    <div className="home">
-      {/* <h1>Welcome to Apartment Management System</h1> */}
-      <div className="sidebar">
-        <h2 className="logo">Apartment.co</h2>
-        <ul>
-          {menuItems.map((item) => (
-            <SideBarList
-              key={item.link}
-              link={item.link}
-              faValue={item.faValue}
-              value={item.value}
-            />
-          ))}
-        </ul>
-      </div>
+    <div className="sidebar">
+      <h2 className="logo">Apartment.co</h2>
+      <ul>
+        {menuItems.map((item) => (
+          <SideBarList
+            key={item.link}
+            link={item.link}
+            faValue={item.faValue}
+            value={item.value}
+          />
+        ))}
+      </ul>
     </div>
   );
 };

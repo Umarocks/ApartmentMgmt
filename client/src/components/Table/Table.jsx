@@ -1,11 +1,13 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 // import "./Table.css";
+
 const Table = ({ data }) => {
   // Get the attributes of the first object in the data array
   const attributes = Object.keys(data[0]);
   console.log(attributes);
   return (
-    <table>
+    <table className="table table-striped table-dark">
       <thead>
         <tr>
           {attributes.map((attribute, index) => (
