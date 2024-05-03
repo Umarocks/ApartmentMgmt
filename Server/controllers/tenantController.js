@@ -51,7 +51,7 @@ const TenantController = {
       res.status(500).send("Error filing complaint");
     }
   },
-
+  
   viewLease: async (req, res) => {
     // Implementation for lease
     try {
