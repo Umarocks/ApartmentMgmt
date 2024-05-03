@@ -21,6 +21,7 @@ import MyContext from "./MyContext";
 import Logout from "./components/Logout/Logout";
 import Owner from "./components/Owner/Owner";
 import Tenant from "./components/Tenant/Tenant";
+import CreateTenant from "./components/Admin/Create Tenant/CreateTenant";
 
 function App() {
   const [menuItems, setMenuItems] = useState([
@@ -40,7 +41,9 @@ function App() {
           <Route path="/admin" element={<Admin />}>
             {/* <Route path="/admin/createadmin" element={<CreateAdmin />} /> */}
             <Route path="createadmin" element={<CreateAdmin />} />
-            <Route path="createowner" element={<CreateOwner />} />{" "}
+            <Route path="createowner" element={<CreateOwner />} />
+            <Route path="createtenant" element={<CreateTenant />} />
+
             {/* Add this line */}
           </Route>
           <Route path="owner" element={<Owner/>}>
