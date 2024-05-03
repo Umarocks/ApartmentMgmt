@@ -173,8 +173,15 @@ const adminController = {
 
   totalTenantCount: async (req, res) => {
     try {
-      const result = await pool.query("SELECT COUNT(EMAIL) FROM TENANT;");
-      res.send(result.rows);
+      const tenantCount = await pool.query("SELECT COUNT(EMAIL) FROM TENANT;");
+      const tenantInformation = await pool.query(
+        "SELECT * FROM public.tenantinformation"
+      );
+      const result = {
+        tenantCount: tenantCount.rows[0],
+        tenantInformation: tenantInformation.rows,
+      };
+      res.send(result);
     } catch (error) {
       console.error("Error counting tenants", error.stack);
       res.status(500).send("Error counting tenants");
