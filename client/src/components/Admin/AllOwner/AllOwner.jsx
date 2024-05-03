@@ -27,9 +27,12 @@ function AllOwner() {
     }
   }, []);
   return (
-    <div className="Table">
-      {OwnerInfor.length > 0 && <Table data={OwnerInfor} />}
-    </div>
+    <>
+      <h1>Total Owner = {OwnerInfor.length}</h1>
+      <div className="Table">
+        {OwnerInfor.length > 0 && <Table data={OwnerInfor} />}
+      </div>
+    </>
   );
 }
 

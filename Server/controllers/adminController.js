@@ -50,11 +50,14 @@ const adminController = {
       block_name,
       apt_address,
     } = req.body;
-    const phone = phoneNumber(req.body.phone);
+
+    const phone = phoneNumber(req.body.phone_no);
+
     const getBlockId = await pool.query(
       "select block_id from block where block_name like ($1) and address like ($2);",
       [block_name, apt_address]
     );
+    console.log(phone);
     const block_id = getBlockId.rows[0].block_id;
     const apt_check = await pool.query(
       "SELECT * FROM apartment WHERE apt_no like ($1) and block_id = ($2);",

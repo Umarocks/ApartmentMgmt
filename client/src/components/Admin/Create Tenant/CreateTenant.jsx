@@ -28,7 +28,14 @@ function CreateTenant() {
   };
 
   const [showSuccess, setShowSuccess] = useState(false);
-
+  // {
+  //   email: 'umar@gmail.com',
+  //   password: 'admin1234',
+  //   name: 'SHREIYA TEST',
+  //   ssn: '123532556',
+  //   phone_no: '1234568763',
+  //   address: 'clear LAKE'
+  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,7 +45,11 @@ function CreateTenant() {
       name: formRef.current.name.value,
       ssn: formRef.current.ssn.value,
       phone_no: formRef.current.phone_no.value,
-      address: formRef.current.address.value,
+      age: formRef.current.Age.value,
+      perm_address: formRef.current.perm_address.value,
+      apt_no: formRef.current.apt_no.value,
+      block_name: formRef.current.block_name.value,
+      apt_address: formRef.current.apt_address.value,
     };
 
     setFormData(updatedFormData);
@@ -100,7 +111,6 @@ function CreateTenant() {
         {AptInfor && AptInfor.length > 0 && <Table data={AptInfor} />}
       </div>
       <div className="form">
-        {showSuccess && <div className="Green-Success">Owner Created</div>}
         <h2>Create Tenant</h2>
         {showSuccess && <div className="Green-Success">Tenant Created</div>}
 
@@ -140,13 +150,6 @@ function CreateTenant() {
             defaultValue={formData.phone_no}
             onChange={handleChange}
           />
-          <label className="form-label">Address:</label>
-          <input
-            type="text"
-            name="address"
-            defaultValue={formData.address}
-            onChange={handleChange}
-          />
           <label className="form-label">Age:</label>
           <input
             type="number"
@@ -166,13 +169,6 @@ function CreateTenant() {
             type="text"
             name="apt_no"
             defaultValue={formData.apt_no}
-            onChange={handleChange}
-          />
-          <label className="form-label">Phone:</label>
-          <input
-            type="text"
-            name="phone"
-            defaultValue={formData.phone}
             onChange={handleChange}
           />
           <label className="form-label">Block Name:</label>
