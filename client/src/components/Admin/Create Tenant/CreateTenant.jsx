@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 
-function CreateOwner() {
+//THIS IS UNFINISHED RN. I CAN ONLY PUT PEOPLE IN AN APARTMENT IF IT EXISTS SO NEED TO FIGURE THAT OUT
+
+function CreateTenant() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -9,6 +11,12 @@ function CreateOwner() {
     ssn: "",
     phone_no: "",
     address: "",
+    Age: 0,
+    perm_address: "",
+    apt_no: "",
+    phone: "",
+    block_name: "",
+    apt_address: "",
   });
 
   const formRef = useRef(null);
@@ -35,7 +43,7 @@ function CreateOwner() {
     console.log(updatedFormData);
     try {
       const response = await axios.post(
-        "http://localhost:3000/admin/createOwner",
+        "http://localhost:3000/admin/createTenant",
         updatedFormData,
         {
           withCredentials: true,
@@ -51,8 +59,8 @@ function CreateOwner() {
 
   return (
     <div>
-      <h2>Create Owner</h2>
-      {showSuccess && <div className="Green-Success">Owner Created</div>}
+      <h2>Create Tenant</h2>
+      {showSuccess && <div className="Green-Success">Tenant Created</div>}
 
       <form ref={formRef} onSubmit={handleSubmit}>
         <label>Email:</label>
@@ -102,6 +110,55 @@ function CreateOwner() {
           defaultValue={formData.address}
           onChange={handleChange}
         />
+
+        <label>Age:</label>
+        <input
+          type="number"
+          name="Age"
+          defaultValue={formData.Age}
+          onChange={handleChange}
+        />
+
+        <label>Permanent Address:</label>
+        <input
+          type="text"
+          name="perm_address"
+          defaultValue={formData.perm_address}
+          onChange={handleChange}
+        />
+
+        <label>Apartment Number:</label>
+        <input
+          type="text"
+          name="apt_no"
+          defaultValue={formData.apt_no}
+          onChange={handleChange}
+        />
+
+        <label>Phone:</label>
+        <input
+          type="text"
+          name="phone"
+          defaultValue={formData.phone}
+          onChange={handleChange}
+        />
+
+        <label>Block Name:</label>
+        <input
+          type="text"
+          name="block_name"
+          defaultValue={formData.block_name}
+          onChange={handleChange}
+        />
+
+        <label>Apartment Address:</label>
+        <input
+          type="text"
+          name="apt_address"
+          defaultValue={formData.apt_address}
+          onChange={handleChange}
+        />
+
         <div className="submit-btn">
           <button className="submit" type="submit">
             Submit
@@ -112,4 +169,4 @@ function CreateOwner() {
   );
 }
 
-export default CreateOwner;
+export default CreateTenant;

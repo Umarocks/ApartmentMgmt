@@ -20,6 +20,11 @@ const Admin = () => {
       value: "Create Owner",
     },
     {
+      link: "/admin/createtenant",
+      faValue: "faExclamationTriangle",
+      value: "Create Tenant",
+    },
+    {
       link: "/logout",
       faValue: "faCheck",
       value: "LogOut",
