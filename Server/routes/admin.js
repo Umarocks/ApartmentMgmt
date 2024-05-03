@@ -110,6 +110,12 @@ router.post(
   adminController.createParking
 );
 
+router.get(
+  "/getAllVacantApartments",
+  ensureAuthenticated,
+  IsAdmin,
+  adminController.AllVacantApartments
+);
 module.exports = router;
 
 //total employee count

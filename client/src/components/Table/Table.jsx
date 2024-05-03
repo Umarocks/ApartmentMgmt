@@ -7,7 +7,10 @@ const Table = ({ data }) => {
   const attributes = Object.keys(data[0]);
   console.log(attributes);
   return (
-    <table className="table table-striped table-dark">
+    <table
+      className="table table-striped table-dark"
+      style={{ margin: "20px" }}
+    >
       <thead>
         <tr>
           {attributes.map((attribute, index) => (

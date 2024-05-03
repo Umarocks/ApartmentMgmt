@@ -1,6 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./CreateTenant.css";
+import Table from "../../Table/Table";
+
 //THIS IS UNFINISHED RN. I CAN ONLY PUT PEOPLE IN AN APARTMENT IF IT EXISTS SO NEED TO FIGURE THAT OUT
 
 function CreateTenant() {
@@ -56,103 +58,144 @@ function CreateTenant() {
       console.error(error);
     }
   };
-  return (
-    <div className="Create-Tenant">
-      {showSuccess && <div className="Green-Success">Owner Created</div>}
-      <h2>Create Tenant</h2>
-      {showSuccess && <div className="Green-Success">Tenant Created</div>}
 
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <label className="form-label">Email:</label>
-        <input
-          type="email"
-          name="email"
-          defaultValue={formData.email}
-          onChange={handleChange}
-        />
-        <label className="form-label">Password:</label>
-        <input
-          type="password"
-          name="password"
-          defaultValue={formData.password}
-          onChange={handleChange}
-        />
-        <label className="form-label">Name:</label>
-        <input
-          type="text"
-          name="name"
-          defaultValue={formData.name}
-          onChange={handleChange}
-        />
-        <label className="form-label">SSN:</label>
-        <input
-          type="text"
-          name="ssn"
-          defaultValue={formData.ssn}
-          onChange={handleChange}
-        />
-        <label className="form-label">Phone Number:</label>
-        <input
-          type="text"
-          name="phone_no"
-          defaultValue={formData.phone_no}
-          onChange={handleChange}
-        />
-        <label className="form-label">Address:</label>
-        <input
-          type="text"
-          name="address"
-          defaultValue={formData.address}
-          onChange={handleChange}
-        />
-        <label className="form-label">Age:</label>
-        <input
-          type="number"
-          name="Age"
-          defaultValue={formData.Age}
-          onChange={handleChange}
-        />
-        <label className="form-label">Permanent Address:</label>
-        <input
-          type="text"
-          name="perm_address"
-          defaultValue={formData.perm_address}
-          onChange={handleChange}
-        />
-        <label className="form-label">Apartment Number:</label>
-        <input
-          type="text"
-          name="apt_no"
-          defaultValue={formData.apt_no}
-          onChange={handleChange}
-        />
-        <label className="form-label">Phone:</label>
-        <input
-          type="text"
-          name="phone"
-          defaultValue={formData.phone}
-          onChange={handleChange}
-        />
-        <label className="form-label">Block Name:</label>
-        <input
-          type="text"
-          name="block_name"
-          defaultValue={formData.block_name}
-          onChange={handleChange}
-        />
-        <label className="form-label">Apartment Address:</label>
-        <input
-          type="text"
-          name="apt_address"
-          defaultValue={formData.apt_address}
-          onChange={handleChange}
-        />
-        <div className="submit-btn">
-          <button className="submit" type="submit">
-            Submit
-          </button>
-        </div>
-      </form>
+  const [AptInfor, setAptInfo] = useState([]);
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await axios
+          .get(
+            `http://localhost:3000/admin/getAllVacantApartments?${Date.now()}`,
+            {
+              withCredentials: true,
+            }
+          )
+          .then((response) => {
+            setAptInfo(response.data);
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  return (
+    <div
+      className="Create-Tenant"
+      style={{
+        display: "Flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+      }}
+    >
+      <div className="VacanyTable" style={{ padding: "5rem" }}>
+        {AptInfor && AptInfor.length > 0 && <Table data={AptInfor} />}
+      </div>
+      <div className="form">
+        {showSuccess && <div className="Green-Success">Owner Created</div>}
+        <h2>Create Tenant</h2>
+        {showSuccess && <div className="Green-Success">Tenant Created</div>}
+
+        <form ref={formRef} onSubmit={handleSubmit}>
+          <label className="form-label">Email:</label>
+          <input
+            type="email"
+            name="email"
+            defaultValue={formData.email}
+            onChange={handleChange}
+          />
+          <label className="form-label">Password:</label>
+          <input
+            type="password"
+            name="password"
+            defaultValue={formData.password}
+            onChange={handleChange}
+          />
+          <label className="form-label">Name:</label>
+          <input
+            type="text"
+            name="name"
+            defaultValue={formData.name}
+            onChange={handleChange}
+          />
+          <label className="form-label">SSN:</label>
+          <input
+            type="text"
+            name="ssn"
+            defaultValue={formData.ssn}
+            onChange={handleChange}
+          />
+          <label className="form-label">Phone Number:</label>
+          <input
+            type="text"
+            name="phone_no"
+            defaultValue={formData.phone_no}
+            onChange={handleChange}
+          />
+          <label className="form-label">Address:</label>
+          <input
+            type="text"
+            name="address"
+            defaultValue={formData.address}
+            onChange={handleChange}
+          />
+          <label className="form-label">Age:</label>
+          <input
+            type="number"
+            name="Age"
+            defaultValue={formData.Age}
+            onChange={handleChange}
+          />
+          <label className="form-label">Permanent Address:</label>
+          <input
+            type="text"
+            name="perm_address"
+            defaultValue={formData.perm_address}
+            onChange={handleChange}
+          />
+          <label className="form-label">Apartment Number:</label>
+          <input
+            type="text"
+            name="apt_no"
+            defaultValue={formData.apt_no}
+            onChange={handleChange}
+          />
+          <label className="form-label">Phone:</label>
+          <input
+            type="text"
+            name="phone"
+            defaultValue={formData.phone}
+            onChange={handleChange}
+          />
+          <label className="form-label">Block Name:</label>
+          <input
+            type="text"
+            name="block_name"
+            defaultValue={formData.block_name}
+            onChange={handleChange}
+          />
+          <label className="form-label">Apartment Address:</label>
+          <input
+            type="text"
+            name="apt_address"
+            defaultValue={formData.apt_address}
+            onChange={handleChange}
+          />
+          <div className="submit-btn">
+            <button className="submit" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
