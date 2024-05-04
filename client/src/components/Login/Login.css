@@ -1,6 +1,7 @@
 /* login.css */
 .login-page {
     display: flex;
+    background-color: antiquewhite;
 }
 
 .login-form-container {
