@@ -31,8 +31,8 @@ const Tenant = () => {
       <div className="dashboard">
         <div className="content">
           <h1>Welcome, Tenant!</h1>
+          <Outlet />
         </div>
-        <Outlet />
       </div>
     </div>
   );

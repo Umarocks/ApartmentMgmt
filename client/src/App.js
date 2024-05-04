@@ -55,7 +55,7 @@ function App() {
           </Route>
           <Route path="/tenant" element={<Tenant />}>
             <Route path="payrent" element={<PayRent />} />
-            <Route path="filecomplaint" element={<FileComplaint />} />
+            <Route path="filecomplaints" element={<FileComplaint />} />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Routes>
