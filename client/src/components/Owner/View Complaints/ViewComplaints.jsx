@@ -4,47 +4,40 @@ import Table from '../../Table/Table'
 import { useOutlet } from "react-router-dom";
 
 const ViewComplaints = () => {
-  const [properties, setProperties] = useState([]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const fetchProperties = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('http://localhost:3000/owner/viewcomplaints',  {withCredentials: true}); 
-      setProperties(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching properties:', error);
-      setError('Failed to fetch properties');
-      setLoading(false);
-    }
-  };
+  const [ComplaintInfor, setComplaintInfor] = useState([]);
+  
   useEffect(() => {
-    fetchProperties();
+    try {
+      const fetchData = async () => {
+        const response = await axios
+          .get(`http://localhost:3000/admin/getAllcomplaint?${Date.now()}`, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            setComplaintInfor(response.data); // Update the state with the fetched data
+            console.log(response.data);
+            console.log(ComplaintInfor.length);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
-const outlet = useOutlet();
-
   return (
-    <div className="properties-container">
-    <div className="dashboard">
-      <div className="content">
-        <div className="header">
-          <h1>View Properties</h1>
-        </div>
-        <div className="table">
-          {!outlet && !loading && properties.length > 0 ? (
-            <Table data={properties} />
-          ) : loading ? (
-            <p>Loading Complaints...</p>
-          ) : (
-            <p>{error || "No Complaints available"}</p>
-          )}
-        </div>
+    <>
+      <h1>Total Complaint = {ComplaintInfor.length}</h1>
+      <div className="Table">
+      {ComplaintInfor.length > 0 ? (
+          <Table data={ComplaintInfor} />
+        ) : (
+          <p>No Complaints available.</p>
+        )}
       </div>
-    </div>
-  </div>
-
+    </>
   );
 }
 

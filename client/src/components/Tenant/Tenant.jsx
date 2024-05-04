@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-// import "./Owner.css"; // Make sure to create or reference the appropriate CSS file
 import "./Tenant.css"; // Import CSS file for Tenant component styling
 import { Outlet } from "react-router-dom";
 import MyContext from "../../MyContext";

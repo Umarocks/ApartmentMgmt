@@ -1,50 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Table from '../../Table/Table'
-import { useOutlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Table from "../../Table/Table";
 
-const ViewProperties = () => {
+function ViewProperties() {
   const [properties, setProperties] = useState([]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const fetchProperties = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('http://localhost:3000/owner/viewProperties',  {withCredentials: true}); 
-      setProperties(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching properties:', error);
-      setError('Failed to fetch properties');
-      setLoading(false);
-    }
-  };
   useEffect(() => {
-    fetchProperties();
+    try {
+      const fetchData = async () => {
+        const response = await axios
+          .get(`http://localhost:3000/owner/viewProperties?${Date.now()}`, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            setProperties(response.data); // Update the state with the fetched data
+            console.log(response.data);
+            console.log(properties.length);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    }
   }, []);
-const outlet = useOutlet();
 
   return (
-    <div className="properties-container">
-    <div className="dashboard">
-      <div className="content">
-        <div className="header">
-          <h1>View Properties</h1>
-        </div>
-        <div className="table">
-          {!outlet && !loading && properties.length > 0 ? (
-            <Table data={properties} />
-          ) : loading ? (
-            <p>Loading properties...</p>
-          ) : (
-            <p>{error || "No properties available"}</p>
-          )}
-        </div>
+    <>
+      <h1>Total Properties = {properties.length}</h1>
+      <div className="Table">
+        {properties.length > 0 ? (
+          <Table data={properties} />
+        ) : (
+          <p>No properties available.</p>
+        )}
       </div>
-    </div>
-  </div>
-
+    </>
   );
 }
 
