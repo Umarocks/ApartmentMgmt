@@ -43,7 +43,7 @@ function CreateOwner() {
 
   return (
     <div>
-      <h2>Create Owner</h2>
+      <h2>Create Block</h2>
       {showSuccess && <div className="Green-Success">Block Created</div>}
 
       <form ref={formRef} onSubmit={handleSubmit}>
