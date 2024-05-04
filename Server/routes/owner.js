@@ -6,7 +6,7 @@ const { IsAdminOrOwner } = require("../middleware/IsAdminorOwner");
 const OwnerController = require("../controllers/OwnerController");
 const { adminController } = require("../controllers/adminController");
 router.get(
-  "/properties",
+  "/viewproperties",
   ensureAuthenticated,
   IsAdminOrOwner,
   OwnerController.viewProperties
