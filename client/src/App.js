@@ -20,6 +20,7 @@ import CreateTenant from "./components/Admin/Create Tenant/CreateTenant";
 import AllOwner from "./components/Admin/AllOwner/AllOwner";
 import CreateBlock from "./components/Admin/Create Block/CreateBlock";
 import CreateApartment from "./components/Admin/Create Apartment/CreateApartment";
+import CreateEmployee from "./components/Admin/Create Employee/CreateEmployee";
 
 function App() {
   const [menuItems, setMenuItems] = useState([
@@ -45,6 +46,7 @@ function App() {
             <Route path="getallcomplaint" element={<AllComplaint />} />
             <Route path="createblock" element={<CreateBlock />} />
             <Route path="createapartment" element={<CreateApartment />} />
+            <Route path="createemployee" element={<CreateEmployee />} />
             {/* Add this line */}
           </Route>
           <Route path="/owner" element={<Owner />}>

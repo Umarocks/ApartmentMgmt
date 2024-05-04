@@ -42,6 +42,11 @@ const Admin = () => {
       value: "Create Apartment",
     },
     {
+      link: "/admin/createemployee",
+      faValue: "faCheck",
+      value: "Create Employee",
+    },
+    {
       link: "/logout",
       faValue: "faCheck",
       value: "LogOut",
