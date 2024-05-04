@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Table from '../../Table/Table'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Table from "../../Table/Table";
 import { useOutlet } from "react-router-dom";
 
 const ViewComplaints = () => {
   const [ComplaintInfor, setComplaintInfor] = useState([]);
-  
+
   useEffect(() => {
     try {
       const fetchData = async () => {
         const response = await axios
-          .get(`http://localhost:3000/admin/getAllcomplaint?${Date.now()}`, {
+          .get(`http://localhost:3000/owner/getAllcomplaint?${Date.now()}`, {
             withCredentials: true,
           })
           .then((response) => {
@@ -31,7 +31,7 @@ const ViewComplaints = () => {
     <>
       <h1>Total Complaint = {ComplaintInfor.length}</h1>
       <div className="Table">
-      {ComplaintInfor.length > 0 ? (
+        {ComplaintInfor.length > 0 ? (
           <Table data={ComplaintInfor} />
         ) : (
           <p>No Complaints available.</p>
@@ -39,6 +39,6 @@ const ViewComplaints = () => {
       </div>
     </>
   );
-}
+};
 
 export default ViewComplaints;

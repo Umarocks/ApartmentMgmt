@@ -9,7 +9,7 @@ function ViewProperties() {
     try {
       const fetchData = async () => {
         const response = await axios
-          .get(`http://localhost:3000/owner/viewProperties?${Date.now()}`, {
+          .get(`http://localhost:3000/owner/viewproperties?${Date.now()}`, {
             withCredentials: true,
           })
           .then((response) => {

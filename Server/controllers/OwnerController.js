@@ -20,24 +20,25 @@ const OwnerController = {
     let query;
     let queryParams;
 
-    if (req.user.role === 'Admin') {
-        query = 'SELECT * FROM apartment;';
-        queryParams = [];
-    } else if (req.user.role === 'Owner') {
-        query = 'SELECT * FROM apartment WHERE owner_id = $1;';
-        queryParams = [req.user.owner_id];
+    if (req.user.role === "Owner") {
+      query = "SELECT * FROM apartment;";
+      queryParams = [];
+    } else if (req.user.role === "Owner") {
+      query = "SELECT * FROM apartment WHERE owner_id = $1;";
+      queryParams = [req.user.owner_id];
     }
 
     try {
-        const result = await pool.query(query, queryParams);
-        res.json(result.rows);
+      const result = await pool.query(query, queryParams);
+      console.log(result.rows);
+      res.json(result.rows);
     } catch (error) {
-        console.error('Error fetching properties', error.stack);
-        res.status(500).send('Error fetching properties');
+      console.error("Error fetching properties", error.stack);
+      res.status(500).send("Error fetching properties");
     }
-   },
+  },
 
-   getAllComplaint: async (req, res) => {
+  getAllComplaint: async (req, res) => {
     try {
       const result = await pool.query(
         "SELECT count(complaint_id) FROM Complaint;"
