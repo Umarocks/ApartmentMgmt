@@ -6,8 +6,7 @@
     width: auto;
     height: auto;
     margin: auto;
-    overflow: hidden;
-    border: 5px solid red;
+    overflow: scroll;
 
 }
 .admin-container{
@@ -17,9 +16,8 @@
     margin: 0;
     flex-direction: row;
     justify-content: flex-start;
-    
-    border: 5px solid yellow;
     overflow: scroll;
+    background-color: antiquewhite;
 }
 
 .Content{
@@ -29,8 +27,8 @@ display: flex;
     align-items: center;
     width: auto;
     height: auto;
-    overflow: hidden;
-    border: 5px solid rgb(14, 45, 216);
+    overflow: scroll;
+
 }
 
 .Table{
@@ -40,6 +38,10 @@ display: flex;
         align-items: flex-start;
         width: auto;
         height: auto;
-        overflow: hidden;
-        border: 5px solid pink;
+        overflow: scroll;
     }
+
+select{
+    min-width: 25rem;
+    min-height: 3rem;
+}

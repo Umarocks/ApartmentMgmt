@@ -7,7 +7,6 @@
     height: auto;
     margin: auto;
     overflow: hidden;
-    border: 5px solid red;
 
 }
 
@@ -18,8 +17,7 @@
     margin: 0;
     flex-direction: row;
     justify-content: flex-start;
-
-    border: 5px solid yellow;
+background-color: antiquewhite;
     overflow: scroll;
 }
 
@@ -31,7 +29,7 @@
     width: auto;
     height: auto;
     overflow: hidden;
-    border: 5px solid rgb(14, 45, 216);
+
 }
 
 .Table {
@@ -42,5 +40,5 @@
     width: auto;
     height: auto;
     overflow: hidden;
-    border: 5px solid pink;
+
 }

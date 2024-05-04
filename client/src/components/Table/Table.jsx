@@ -9,7 +9,7 @@ const Table = ({ data }) => {
   return (
     <table
       className="table table-striped table-dark"
-      style={{ margin: "20px" }}
+      style={{ overflow: "scroll", padding: "20px" }}
     >
       <thead>
         <tr>
