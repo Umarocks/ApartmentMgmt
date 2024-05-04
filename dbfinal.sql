@@ -6,8 +6,7 @@ CREATE DOMAIN PasswordDomain AS VARCHAR(15)
 	CHECK (VALUE ~ '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})[a-zA-Z0-9!@#$%^&*]+$');
 
 CREATE DOMAIN PhoneNoDomain AS VARCHAR(15)
-	CHECK (VALUE ~ '^\+[0-9]{1,3}[0-9]{10}$');
- 
+	CHECK (VALUE ~ '^\+[0-9]{11,15}$');
 -- ensures uniqueness between the Admin and Maintenance_Staff tables for the Emp_ID attribute--
 CREATE DOMAIN EmpIDDomain AS VARCHAR(10)
 	CHECK (VALUE NOT IN (
@@ -292,13 +291,18 @@ LEFT JOIN Tenant t ON c.Tenant_id = t.Tenant_id
 LEFT JOIN Maintenance_Staff m ON c.Emp_ID = m.Emp_ID;
 
 CREATE VIEW ApartmentAvailability AS
-SELECT a.Apt_No, a.Block_id, 
-       CASE
-            WHEN p.Tenant_id IS NULL THEN 'Vacant'
-            ELSE 'Occupied'
-       END AS Availability
-FROM Apartment a
-LEFT JOIN Parking p ON a.Apt_No = p.Tenant_id; 
+ SELECT a.apt_no,
+    a.block_id,
+    a.address,
+    b.block_name,
+        CASE
+            WHEN p.tenant_id IS NULL THEN 'Vacant'::text
+            ELSE 'Occupied'::text
+        END AS availability
+   FROM apartment a
+     LEFT JOIN parking p ON a.block_id = p.block_id
+     LEFT JOIN tenant t ON t.apt_no::text = a.apt_no::text AND t.block_id = a.block_id
+     LEFT JOIN block b ON t.block_id = b.block_id;
 
 
 CREATE VIEW AdminDashboard AS
@@ -309,3 +313,12 @@ SELECT
     (SELECT COUNT(*) FROM Maintenance_Staff) AS Total_Maintenance_Staff,
     (SELECT COUNT(*) FROM Apartment) AS Total_Apartments,
     (SELECT COUNT(*) FROM Parking) AS Total_Parking_Spots;
+
+
+
+-- INDEXIG OF THE DATABASE
+CREATE INDEX idx_login_email ON Login(Email);
+CREATE INDEX idx_admin_adminid ON Admin(Emp_ID);
+CREATE INDEX idx_employee_empid ON maintenance_staff(Emp_ID);
+CREATE INDEX idx_owner_ownerid ON Owner(Owner_ID);
+CREATE INDEX idx_complaint_complaintid ON Complaint(Complaint_ID);
