@@ -1,13 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 function CreateAdmin() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-    phone: "",
-    shift_timings: "9:00 AM - 5:00 PM",
-  });
+  const [formData, setFormData] = useState();
 
   const formRef = useRef(null);
 
@@ -35,7 +29,7 @@ function CreateAdmin() {
       .then((response) => {
         // Handle success
         console.log(response.data);
-        setShowSuccess(true);
+        setShowSuccess(!showSuccess);
       })
       .catch((error) => {
         // Handle error
