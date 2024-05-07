@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import './FileComplaint.css';
+import "./FileComplaint.css";
 
 function FileComplaint() {
   const [formData, setFormData] = useState({
@@ -26,7 +26,7 @@ function FileComplaint() {
     const updatedFormData = {
       fullName: formRef.current.fullName.value,
       email: formRef.current.email.value,
-      complaint: formRef.current.complaint.value,
+      complaint_description: formRef.current.complaint.value,
     };
 
     setFormData(updatedFormData);
@@ -34,8 +34,11 @@ function FileComplaint() {
 
     try {
       const response = await axios.post(
-        "/api/fileComplaint",
-        updatedFormData
+        "http://localhost:3000/tenant/complaints",
+        updatedFormData,
+        {
+          withCredentials: true,
+        }
       );
 
       console.log(response.data);
@@ -49,7 +52,11 @@ function FileComplaint() {
   return (
     <div className="file-complaint-page">
       <div className="file-complaint-form-container">
-        <form className="file-complaint-form" onSubmit={handleSubmit}>
+        <form
+          className="file-complaint-form"
+          onSubmit={handleSubmit}
+          ref={formRef}
+        >
           <h2>File Complaint</h2>
           <div className="form-group">
             <label htmlFor="fullName">Full Name:</label>
@@ -59,6 +66,7 @@ function FileComplaint() {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
+              ref={formRef}
             />
           </div>
           <div className="form-group">
@@ -69,6 +77,7 @@ function FileComplaint() {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              ref={formRef}
             />
           </div>
           <div className="form-group">
@@ -79,6 +88,7 @@ function FileComplaint() {
               rows="4"
               value={formData.complaint}
               onChange={handleChange}
+              ref={formRef}
             ></textarea>
           </div>
           {error && <div className="error">{error}</div>}
@@ -87,6 +97,7 @@ function FileComplaint() {
           </button>
         </form>
       </div>
+      {showSuccess && <div className="Green-Success">Admin Created</div>}
     </div>
   );
 }
