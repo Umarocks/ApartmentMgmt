@@ -5,7 +5,7 @@
 The idea for ALMS emerged from the need to simplify and automate the complex tasks involved in apartment management. Traditional methods of handling tenant records, leases, complaints, and payments are time-consuming and prone to human error. ALMS addresses these issues by offering a modern, integrated solution.
 
 
-### This project was part of CSCI 5333 - Data Base Management System  at  UHCL taught by Professor Khondker Shajadul Hasan. This Projects main focus was on Database Design, Management and Manipulation. 
+### This project was part of CSCI 5333 - Data Base Management System  at  UHCL taught by Professor Khondker Shajadul Hasan. This Project's main focus was on Database Design, Management and Manipulation. 
 ---
 
 ## What it does
